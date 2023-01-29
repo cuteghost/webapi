@@ -1,0 +1,13 @@
+﻿using Dental_App.Models.Domain;
+using Microsoft.EntityFrameworkCore;
+
+namespace server.Database;
+public class DentalDBContext : DbContext
+{
+    public DentalDBContext(DbContextOptions<DentalDBContext> options) : base(options)
+    {
+
+    }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Staff> Staff { get; set; }
+}
