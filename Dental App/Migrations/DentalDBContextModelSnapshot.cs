@@ -22,6 +22,58 @@ namespace DentalApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Dental_App.Models.Domain.Patient", b =>
+                {
+                    b.Property<long>("PatientId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PatientId"));
+
+                    b.Property<string>("Adress")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<string>("Alergies")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<DateTime>("FirstVisitDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("LastPaymentDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("LastVisitDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Perceptions")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<string>("SpecialRequests")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<string>("Telephone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("PatientId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Patients");
+                });
+
             modelBuilder.Entity("Dental_App.Models.Domain.Staff", b =>
                 {
                     b.Property<long>("StaffId")
@@ -100,6 +152,17 @@ namespace DentalApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Dental_App.Models.Domain.Patient", b =>
+                {
+                    b.HasOne("Dental_App.Models.Domain.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Dental_App.Models.Domain.Staff", b =>

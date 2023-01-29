@@ -1,5 +1,7 @@
+using Dental_App.Repository.Classes.Users.PatientsRepo;
 using Dental_App.Repository.Classes.Users.Staff;
 using Dental_App.Repository.Classes.Users.StaffRepo;
+using Dental_App.Repository.Interfaces.Users.PatientsInterface;
 using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
 using Dental_App.Repository.Interfaces.Users.StaffRepo;
 using Dental_App.Validations.Classes.Users;
@@ -32,14 +34,23 @@ builder.Services.AddDbContext<DentalDBContext>(options =>
 });
 
 
+/* USERS */
 builder.Services.AddScoped<IStaffCreate, StaffCreate>();
 builder.Services.AddScoped<IStaffUpdate, StaffUpdate>();
 builder.Services.AddScoped<IStaffRead, StaffRead>();
 builder.Services.AddScoped<IStaffDelete, StaffDelete>();
+builder.Services.AddTransient<IStaffValidations, StaffValidations>();
+/************************************************************************/
+builder.Services.AddScoped<IPatientsCreate, PatientsCreate>();
+builder.Services.AddScoped<IPatientsRead, PatientsRead>();
+builder.Services.AddScoped<IPatientsUpdate, PatientsUpdate>();
+builder.Services.AddScoped<IPatientsDelete, PatientsDelete>();
+builder.Services.AddTransient<IPatientValidations, PatientValidations>();
+
 
 builder.Services.AddTransient<IUserValidations, UserValidations>();
-builder.Services.AddTransient<IStaffValidations, StaffValidations>();
 
+/*----------------------------------------------------------------------*/
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 var app = builder.Build();
 
