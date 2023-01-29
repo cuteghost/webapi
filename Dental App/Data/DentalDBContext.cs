@@ -10,4 +10,5 @@ public class DentalDBContext : DbContext
     }
     public DbSet<User> Users { get; set; }
     public DbSet<Staff> Staff { get; set; }
+    public DbSet<Patient> Patients { get; set; }
 }

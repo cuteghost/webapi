@@ -1,5 +1,4 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Validations.Common;
+﻿using Dental_App.Validations.Common;
 
 namespace Dental_App.Validations.Interfaces.Users;
 public interface IUserValidations
@@ -8,6 +7,7 @@ public interface IUserValidations
     public bool ValidateBasics(string firstName, string lastName, string password, string jmbg);
     public Task<bool> ValidateJMBGUnique(string jmbg, long UserId = 0);
     public Task<bool> ValidateEmailUnique(string email, long UserId = 0);
+    public Task<bool> ValidateDeleteUser(long adminId, long UserId);
     public Validation GetValidation();
 
     //TODO: Validacija sifre, regexom provjerit jel sifra kompleksna 
