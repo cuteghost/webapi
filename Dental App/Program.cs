@@ -29,10 +29,9 @@ builder.Services.AddDbContext<DentalDBContext>(options =>
     }
     else
     {
-        Console.WriteLine("ERROR: SQL Server Unreachable. Server is not responding");
+        Console.WriteLine("ERROR: Unable to connect to SQL server(Main)");
     }
 });
-
 
 /* USERS */
 builder.Services.AddScoped<IStaffCreate, StaffCreate>();
