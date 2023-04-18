@@ -1,13 +1,18 @@
+using Dental_App.Repository.Classes.Users;
 using Dental_App.Repository.Classes.Users.PatientsRepo;
 using Dental_App.Repository.Classes.Users.Staff;
 using Dental_App.Repository.Classes.Users.StaffRepo;
+using Dental_App.Repository.Interfaces.Users;
 using Dental_App.Repository.Interfaces.Users.PatientsInterface;
 using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
 using Dental_App.Repository.Interfaces.Users.StaffRepo;
 using Dental_App.Validations.Classes.Users;
+using Dental_App.Validations.Common.Validations;
 using Dental_App.Validations.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
+using Services.PropertyService;
+using Services.ResponseService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +37,12 @@ builder.Services.AddDbContext<DentalDBContext>(options =>
         Console.WriteLine("ERROR: Unable to connect to SQL server(Main)");
     }
 });
-
+/* helpServices */
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IResponseService, ResponseService>();
 /* USERS */
+builder.Services.AddScoped<IUsersRead, UsersRead>();
+
 builder.Services.AddScoped<IStaffCreate, StaffCreate>();
 builder.Services.AddScoped<IStaffUpdate, StaffUpdate>();
 builder.Services.AddScoped<IStaffRead, StaffRead>();
@@ -44,21 +53,21 @@ builder.Services.AddScoped<IPatientsCreate, PatientsCreate>();
 builder.Services.AddScoped<IPatientsRead, PatientsRead>();
 builder.Services.AddScoped<IPatientsUpdate, PatientsUpdate>();
 builder.Services.AddScoped<IPatientsDelete, PatientsDelete>();
-builder.Services.AddTransient<IPatientValidations, PatientValidations>();
-
-
-builder.Services.AddTransient<IUserValidations, UserValidations>();
-
+builder.Services.AddScoped<IPatientValidations, PatientValidations>();
+builder.Services.AddScoped<IUserValidations, UserValidations>();
+builder.Services.AddScoped<IValidationsService, ValidationsService>();
 /*----------------------------------------------------------------------*/
+
+
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 var app = builder.Build();
 
 //// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 

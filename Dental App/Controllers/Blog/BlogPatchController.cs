@@ -12,15 +12,12 @@ public partial class BlogController : Controller
     [Route("update/{blogId}/{creatorId}")]
     public async Task<IActionResult> UpdateBlogAsync(long blogId, long creatorId, BlogPatch blogDTO)
     {
-        if (await _blogValidations.ValidatePATCH(blogDTO) == true)
+        var validationResult = await _blogValidations.ValidatePATCH(blogDTO);
+        if(validationResult.ResultOfValidations == true)
         {
             var blog = _mapper.Map<Blog>(blogDTO);
             await _blogUpdate.UpdateBlog(blog);
-            return Ok(blog.Id);
         }
-        else
-        {
-            return BadRequest();
-        }
+        return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
     }
 }

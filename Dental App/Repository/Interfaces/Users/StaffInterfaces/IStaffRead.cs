@@ -2,4 +2,5 @@
 
 public interface IStaffRead
 {
+    public Task<long> GetStaffUserId(long userId);
 }

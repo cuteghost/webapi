@@ -12,16 +12,13 @@ public partial class StaffController : Controller
     {
         staffDTO.Id = UserId;
         staffDTO.StaffId = StaffId;
-        if (await _staffValidations.ValidatePATCH(staffDTO) == true)
+        var validationResult = await _staffValidations.ValidatePATCHRequest(staffDTO);
+        if (validationResult.ResultOfValidations == true)
         {
             var userDomain = _mapper.Map<User>(staffDTO);
             var staffDomain = _mapper.Map<Staff>(staffDTO);
-
             await _staffUpdateRepository.UpdateStaffAsync(userDomain, staffDomain);
-
-            return Ok("Staff member updated succesfuly!");
         }
-        //return BadRequest(_staffValidations.validations.validation.validationMessage);
-        return BadRequest();
+        return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
     }
 }

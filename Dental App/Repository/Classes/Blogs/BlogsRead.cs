@@ -14,13 +14,17 @@ public class BlogsRead : IBlogsRead
     public async Task<List<Blog>> GetAllTitles()
     {
         //TODO: Kreirati DTO za Titlove ili vratiti samo ovdje titlove???
-        var blogTitles = await _dbContext.Blogs.ToListAsync();
+        var blogTitles = await _dbContext.Blogs.AsNoTracking().ToListAsync();
         return  blogTitles;
     }
-
     public async Task<Blog> GetBlogDetails(long blogId)
     {
-        var blogTitles = await _dbContext.Blogs.FirstAsync(s=>s.Id == blogId);
+        var blogTitles = await _dbContext.Blogs.AsNoTracking().FirstAsync(s=>s.Id == blogId);
         return blogTitles;
+    }
+    public async Task<long> BlogExists(long blogID)
+    {
+        var id = await _dbContext.Blogs.AsNoTracking().Where(s => s.Id == blogID).Select(s => s.Id).FirstAsync();
+        return id;
     }
 }

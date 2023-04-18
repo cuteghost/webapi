@@ -1,15 +1,24 @@
-﻿using Dental_App.Models.Domain;
+﻿using System.ComponentModel.DataAnnotations;
+using Dental_App.Models.Domain;
 
-namespace Dental_App.Models.DTO.UserDTO
-{
+namespace Dental_App.Models.DTO.UserDTO;
     public class UserPost
     {
+        [MaxLength(15)]
+        [MinLength(3)]
         public string FirstName { get; set; } = string.Empty;
+        [MaxLength(30)]
+        [MinLength(3)]
         public string LastName { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
+        [MaxLength(13)]
+        [MinLength(13)]
         public string JMBG { get; set; } = string.Empty;
-        public Gender Gender { get; set; } = 0;
+        public Gender Gender { get; set; }
+        [Required]
+        [MaxLength(30)]
         public string Email { get; set; } = string.Empty;
+        [MaxLength(16)]
+        [MinLength(8)]
         public string Password { get; set; } = string.Empty;
     }
-}

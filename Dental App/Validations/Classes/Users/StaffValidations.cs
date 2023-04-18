@@ -1,55 +1,25 @@
 ﻿using Dental_App.Models.DTO.UserDTO.Staff;
-using Dental_App.Validations.Common;
+using Dental_App.Validations.Common.Validations;
 using Dental_App.Validations.Interfaces.Users;
 
 namespace Dental_App.Validations.Classes.Users;
 public class StaffValidations : IStaffValidations
 {
-    public Common.Validations validations { get; set; }
-    public readonly IUserValidations userValidations;  
+    public readonly IUserValidations _userValidations;  
 	public StaffValidations(IUserValidations userValidations)
 	{
-		this.userValidations = userValidations;
-		this.validations = new Common.Validations();
+		this._userValidations = userValidations;
 	}
-	public async Task<bool> ValidatePOST(StaffPost newStaff)
+	public async Task<ValidationModel> ValidatePOSTRequest(StaffPost newStaff)
 	{
-        if (userValidations.ValidateBasics(newStaff.FirstName, newStaff.LastName, newStaff.Password, newStaff.JMBG) == false)
-        {
-            validations.validation = userValidations.GetValidation();
-            return false;
-        }
-        if (await userValidations.ValidateJMBGUnique(jmbg:newStaff.JMBG) == false)
-		{
-			validations.validation = userValidations.GetValidation();
-            return false;
-        }
-
-        if (await userValidations.ValidateEmailUnique(email:newStaff.Email) == false)
-        {
-            validations.validation = userValidations.GetValidation();
-            return false;
-        }
-		return true;
+        return await _userValidations.ValidatePOSTRequest(newStaff);
     }
-    public async Task<bool> ValidatePATCH(StaffPatch newStaff)
+    public async Task<ValidationModel> ValidatePATCHRequest(StaffPatch staff)
     {
-        if(userValidations.ValidateBasics(newStaff.FirstName,newStaff.LastName,newStaff.Password,newStaff.JMBG) == false)
-        {
-            validations.validation = userValidations.GetValidation();
-            return false;
-        }
-        if (await userValidations.ValidateJMBGUnique(jmbg: newStaff.JMBG) == false)
-        {
-            validations.validation = userValidations.GetValidation();
-            return false;
-        }
-
-        if (await userValidations.ValidateEmailUnique(email: newStaff.Email) == false)
-        {
-            validations.validation = userValidations.GetValidation();
-            return false;
-        }
-        return true;
+        return await _userValidations.ValidatePATCHRequest(staff);
+    }
+    public async Task<ValidationModel> ValidateDELETERequest(long adminId, long userId)
+    {
+        return await _userValidations.ValidateDELETERequest(adminId,userId);
     }
 }

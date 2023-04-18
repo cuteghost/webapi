@@ -12,11 +12,11 @@ public partial class BlogController : Controller
     [Route("delete/{blogId}/{creatorId}")]
     public async Task<IActionResult> DeleteAsync(long blogId, long creatorId)
     {
-        if(await _blogValidations.ValidateDELETE(blogId,creatorId) == false)
+        var validationResult = await _blogValidations.ValidateDELETE(blogId,creatorId);
+        if(validationResult.ResultOfValidations == true)
         {
-            return BadRequest();
+           await _blogDelete.DeleteBlog(blogId);
         }
-        await _blogDelete.DeleteBlog(blogId);
-        return Ok(blogId);
+        return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);    
     }
 }

@@ -7,14 +7,13 @@ public partial class PatientController : Controller
 {
     [HttpDelete]
     [Route("delete/{AdminId}/{UserId}")]
-    public async Task<IActionResult> DeletePatientAsync(long AdminId, long UserId)
+    public async Task<IActionResult> DeletePatientAsync(long adminId, long userId)
     {
-        if (await _patientValidations.ValidateDELETE(AdminId, UserId) == true)
+        var validationResult = await _patientValidations.ValidateDELETERequest(adminId,userId);
+        if (validationResult.ResultOfValidations == true)
         {
-            await _patientDeleteRepository.DeletePatientAsync(AdminId, UserId);
-            return Ok("Patient deleted successfuly!");
+            await _patientDeleteRepository.DeletePatientAsync(adminId, userId);
         }
-        //return BadRequest(_staffValidations.validations.validation.validationMessage);
-        return BadRequest();
+         return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
     }
 }

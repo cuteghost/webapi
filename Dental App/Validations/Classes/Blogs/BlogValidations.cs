@@ -1,84 +1,101 @@
 ﻿using Dental_App.Models.DTO.BlogDTO;
+using Dental_App.Repository.Interfaces.BlogsInterfaces;
+using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
+using Dental_App.Validations.Common.Validations;
 using Dental_App.Validations.Interfaces.Blogs;
-using Microsoft.EntityFrameworkCore;
-using server.Database;
 
 namespace Dental_App.Validations.Classes.Blogs;
 public class BlogValidations : IBlogValidations
 {
-    private readonly DentalDBContext _dbContext;
-    public Common.Validations validations { get; set; }
-    public BlogValidations(DentalDBContext dbContext, Common.Validations validations)
+    private readonly IBlogsRead _blogReadService;
+    private readonly IStaffRead _staffReadService;
+    public  IValidationsService _validationsService { get; set; }
+    public BlogValidations(IBlogsRead blogReadService,IStaffRead staffReadService, IValidationsService validationsService)
     {
-        _dbContext = dbContext;
-        this.validations = validations;
+        _blogReadService = blogReadService;
+        _staffReadService = staffReadService;
+        _validationsService = validationsService;
     }
-    //TODO: Dodati poruke ukoliko validacije ne prodju na svim metodama.
-    public async Task<bool> ValidatePOST(BlogPOST newBlog)
-    {
-        if(validations.ValidateLength(newBlog.Content,200,4000) == false)
-        {
-            return false;
-        }
-        if (validations.ValidateLength(newBlog.Title, 10, 50) == false)
-        {
-            return false;
-        }
 
-        if(await ValidateCreator(newBlog.CreatorId) == false)
-        {
-            return false;
-        }
-        return true;
-    }
-    public async Task<bool> ValidatePATCH(BlogPatch blog)
+    public async Task<ValidationModel> ValidatePOST(BlogPOST newBlog)
     {
-        if (validations.ValidateLength(blog.Content, 200, 4000) == false)
+        var validationResult = _validationsService.ValidateFieldsLength(newBlog,new string[] {"CreatorId"},("",""));
+        if(!validationResult.ResultOfValidations) return validationResult;
+        if(!await ValidateBlogCreatorRole(newBlog.CreatorId))
         {
-            return false;
+            return new ValidationModel
+            {
+                ValidationMessage = $"You are unauthorized to create the blog.",
+                StatusCode = 401,
+                ResultOfValidations = false
+            };
         }
-        if (validations.ValidateLength(blog.Title, 10, 50) == false)
+        return new ValidationModel
         {
-            return false;
-        }
+            ValidationMessage = $"Blog created successfuly!",
+            StatusCode = 201,
+            ResultOfValidations = true
+        };
+    }
 
-        if (await ValidateCreator(blog.Id,blog.CreatorId) == false)
-        {
-            return false;
-        }
-        return true;
-    }
-    public async Task<bool> ValidateDELETE(long blogId, long creatorId)
+    public async Task<ValidationModel> ValidatePATCH(BlogPatch blog)
     {
-        if (await ValidateCreator(blogId, creatorId) == false)
+        var validationResult = _validationsService.ValidateFieldsLength(blog,new string[] {"Id","CreatorId"},("",""));
+        if(!validationResult.ResultOfValidations) return validationResult;
+        if (await ValidateBlogChanger(blog.Id, blog.CreatorId) == false)
         {
-            return false;
+            return new ValidationModel
+            {
+                ValidationMessage = $"You are unauthorized to modify this blog.",
+                StatusCode = 401,
+                ResultOfValidations = false
+            };
         }
-        return true;
+        return new ValidationModel
+        {
+            ValidationMessage = $"Blog updated successfuly!",
+            StatusCode = 201,
+            ResultOfValidations = true
+        };
     }
-    public async Task<bool> ValidateCreator(long creatorId)
+    public async Task<ValidationModel> ValidateDELETE(long blogId, long creatorId)
+    {
+        if (await ValidateBlogChanger(blogId, creatorId) == false)
+        {
+            return new ValidationModel
+            {
+                ValidationMessage = $"You are unauthorized to delete this blog.",
+                StatusCode = 401,
+                ResultOfValidations = false
+            };
+        }
+        return new ValidationModel
+        {
+            ValidationMessage = $"You have deleted deleted blog.",
+            StatusCode = 204,
+            ResultOfValidations = false
+        };
+    }
+    public async Task<bool> ValidateBlogCreatorRole(long creatorId)
     {
         if(creatorId == 0)
         {
             return false;
         }
-        if (await _dbContext.Staff.AsNoTracking().FirstOrDefaultAsync(s=> s.User.Id == creatorId) == null)
+        if (await _staffReadService.GetStaffUserId(creatorId) == 0)
         {
             return false;
         }
         return true;
     }
-    public async Task<bool> ValidateCreator(long blogId, long creatorId)
+    public async Task<bool> ValidateBlogChanger(long blogId, long changerId)
     {
-        if(blogId == 0)
+        var blog = await _blogReadService.GetBlogDetails(blogId);
+        if (changerId == 0)
         {
             return false;
         }
-        if (creatorId == 0)
-        {
-            return false;
-        }
-        if (await _dbContext.Blogs.AsNoTracking().Where(blogs=> blogs.Id == blogId && blogs.Creator.Id == creatorId).FirstOrDefaultAsync() == null)
+        if (blog.Creator.Id != changerId)
         {
             return false;
         }

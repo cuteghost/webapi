@@ -1,12 +1,12 @@
 ﻿using Dental_App.Models.DTO.BlogDTO;
+using Dental_App.Validations.Common.Validations;
 
 namespace Dental_App.Validations.Interfaces.Blogs;
 public interface IBlogValidations
 {
-    public Common.Validations validations { get; set; }
-    public Task<bool> ValidateCreator(long creatorId);
-    public Task<bool> ValidateCreator(long blogId, long creatorId);
-    public Task<bool> ValidatePOST(BlogPOST newblog);
-    public Task<bool> ValidatePATCH(BlogPatch blog);
-    public Task<bool> ValidateDELETE(long blogId, long creatorId);
+    public Task<bool> ValidateBlogCreatorRole(long creatorId);
+    public Task<bool> ValidateBlogChanger(long blogId, long changerId);
+    public Task<ValidationModel> ValidatePOST(BlogPOST newblog);
+    public Task<ValidationModel> ValidatePATCH(BlogPatch blog);
+    public Task<ValidationModel> ValidateDELETE(long blogId, long creatorId);
 }

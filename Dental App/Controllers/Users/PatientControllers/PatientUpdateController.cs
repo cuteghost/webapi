@@ -11,16 +11,13 @@ public partial class PatientController : Controller
     {
         patientDTO.Id = UserId;
         patientDTO.PatientId = PatientId;
-        if (await _patientValidations.ValidatePATCH(patientDTO) == true)
+        var validationResult = await _patientValidations.ValidatePATCHRequest(patientDTO);
+        if (validationResult.ResultOfValidations == true)
         {
             var userDomain = _mapper.Map<User>(patientDTO);
             var patientDomain = _mapper.Map<Patient>(patientDTO);
-
             await _patientUpdateRepository.UpdatePatientAsync(userDomain, patientDomain);
-
-            return Ok("Patient updated succesfuly!");
         }
-        //return BadRequest(_staffValidations.validations.validation.validationMessage);
-        return BadRequest();
+        return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
     }
 }

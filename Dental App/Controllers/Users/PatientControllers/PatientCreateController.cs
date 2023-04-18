@@ -9,16 +9,13 @@ public partial class PatientController : Controller
     [Route("create")]
     public async Task<IActionResult> CreatePatientAsync(PatientPOST newPatientDTO)
     {
-        if (await _patientValidations.ValidatePOST(newPatientDTO) == true)
+        var validationResult = await _patientValidations.ValidatePOSTRequest(newPatientDTO);
+        if (validationResult.ResultOfValidations == true)
         {
             var userDomain = _mapper.Map<User>(newPatientDTO);
             var patientDomain = _mapper.Map<Patient>(newPatientDTO);
-
             await _patientCreateRepository.CreatePatientAsync(userDomain, patientDomain);
-
-            return Ok("Patient  added successfuly!");
         }
-        //return BadRequest(_staffValidations.validations.validation.validationMessage);
-        return BadRequest();
+        return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
     }
 }

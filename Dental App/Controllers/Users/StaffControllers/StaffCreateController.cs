@@ -9,16 +9,13 @@ public partial class StaffController : Controller
     [Route("create")]
     public async Task<IActionResult> CreateStaffAsync(StaffPost newStaffDTO)
     {
-        if (await _staffValidations.ValidatePOST(newStaffDTO) == true)
+        var validationResult = await _staffValidations.ValidatePOSTRequest(newStaffDTO);
+        if (validationResult.ResultOfValidations == true)
         {
             var userDomain = _mapper.Map<User>(newStaffDTO);
             var staffDomain = _mapper.Map<Staff>(newStaffDTO);
-
             await _staffCreateRepository.CreateStaffAsync(userDomain, staffDomain);
-
-            return Ok("Staff member added successfuly!");
         }
-        //return BadRequest(_staffValidations.validations.validation.validationMessage);
-        return BadRequest();
+        return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
     }
 }

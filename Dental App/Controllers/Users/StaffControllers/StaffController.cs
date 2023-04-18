@@ -4,6 +4,7 @@ using Dental_App.Models.DTO.UserDTO.Staff;
 using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
 using Dental_App.Validations.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
+using Services.ResponseService;
 
 namespace Dental_App.Controllers.Users.StaffControllers;
 
@@ -16,17 +17,18 @@ public partial class StaffController : Controller
     private readonly IStaffUpdate _staffUpdateRepository;
     private readonly IStaffDelete _staffDeleteRepository;
 
-
+    private readonly IResponseService _responseService;
     private readonly IStaffValidations _staffValidations;
     private readonly IMapper _mapper;
 
-    public StaffController(IStaffCreate staffCreateRepository, IStaffRead staffReadRepository, IStaffUpdate staffUpdateRepository, IStaffDelete staffDeleteRepository, IStaffValidations staffValidations, IMapper mapper)
+    public StaffController(IStaffCreate staffCreateRepository, IStaffRead staffReadRepository, IStaffUpdate staffUpdateRepository, IStaffDelete staffDeleteRepository, IStaffValidations staffValidations,IResponseService responseService, IMapper mapper)
     {
         _staffCreateRepository = staffCreateRepository;
         _staffReadRepository = staffReadRepository;
         _staffUpdateRepository = staffUpdateRepository;
         _staffDeleteRepository = staffDeleteRepository;
         _staffValidations = staffValidations;
+        _responseService = responseService;
         _mapper = mapper;
     }
 }
