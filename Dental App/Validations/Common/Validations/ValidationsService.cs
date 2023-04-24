@@ -47,18 +47,18 @@ public class ValidationsService : IValidationsService
         {
             /* if the field type is not string for example: Id, then this for that field is jumped */
             if (exceptFields.Contains(propertyInfo.Name) == true) { continue; }
-            if (propertyInfo.GetValue(myObject).ToString() != null)
-            {
-                (string maxMess, string minMess) fieldLengthMessage = SetValidationFieldsLengthMessage(customFieldLengthMessages,propertyInfo);
-                if (!ValidateMinFieldLength(_propertyService.GetPropertyValue(propertyInfo,myObject), _propertyService.GetMinLengthOfTheFieldBasedOnAttributte(propertyInfo)) == false)
+                if (propertyInfo.GetValue(myObject).ToString() != null)
                 {
-                    return GetValidationModel(fieldLengthMessage.minMess, 400, false);
+                    (string maxMess, string minMess) fieldLengthMessage = SetValidationFieldsLengthMessage(customFieldLengthMessages,propertyInfo);
+                    if (!ValidateMinFieldLength(_propertyService.GetPropertyValue(propertyInfo,myObject), _propertyService.GetMinLengthOfTheFieldBasedOnAttributte(propertyInfo)))
+                    {
+                        return GetValidationModel(fieldLengthMessage.minMess, 400, false);
+                    }
+                    if (!ValidateMaxFieldLength(_propertyService.GetPropertyValue(propertyInfo,myObject), _propertyService.GetMaxLengthOfTheFieldBasedOnAttributte(propertyInfo)))
+                    {
+                        return GetValidationModel( fieldLengthMessage.maxMess, 400, false);
+                    }
                 }
-                if (!ValidateMaxFieldLength(_propertyService.GetPropertyValue(propertyInfo,myObject), _propertyService.GetMaxLengthOfTheFieldBasedOnAttributte(propertyInfo)) == false)
-                {
-                    return GetValidationModel( fieldLengthMessage.maxMess, 400, false);
-                }
-            }
         }
         return new ValidationModel
         {

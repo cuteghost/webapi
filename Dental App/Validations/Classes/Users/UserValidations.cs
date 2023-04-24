@@ -2,8 +2,8 @@
 using Dental_App.Models.DTO.UserDTO;
 using Dental_App.Repository.Interfaces.Users;
 using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
-using Dental_App.Validations.Interfaces.Users;
 using Dental_App.Validations.Common.Validations;
+using Dental_App.Validations.Interfaces.Users;
 
 namespace Dental_App.Validations.Classes.Users;
 public class UserValidations : IUserValidations
@@ -19,14 +19,14 @@ public class UserValidations : IUserValidations
     }
     public async Task<ValidationModel> ValidatePOSTRequest(UserPost newUser)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(newUser,new string[] {"BirthDate","Gender"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(newUser,new string[] {"BirthDate","Gender","Joined","Email"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
         validationResult = await ValidateUniqueFields(newUser.JMBG,0);
         return validationResult;
     }
     public async Task<ValidationModel> ValidatePATCHRequest(UserPatch user)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id","BirthDate","Gender"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id","BirthDate","Gender","Joined","Email"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
         validationResult = await ValidateUniqueFields(user.JMBG,0);
         return validationResult;

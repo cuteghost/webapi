@@ -14,8 +14,8 @@ public class UsersRead : IUsersRead
     {
         try
         {
-            var userID = await _dbContext.Users.AsNoTracking().Where(s => s.JMBG == jmbg).Select(s => s.Id).FirstAsync();
-            return userID;
+            var userID = await _dbContext.Users.AsNoTracking().Where(s => s.JMBG == jmbg).Select(s => s.Id).FirstOrDefaultAsync();
+            return userID; 
         }
         catch (Exception)
         {
@@ -27,7 +27,7 @@ public class UsersRead : IUsersRead
     {
         try
         {
-            var userID = await _dbContext.Users.AsNoTracking().Where(s => s.Email == email).Select(s => s.Id).FirstAsync();
+            var userID = await _dbContext.Users.AsNoTracking().Where(s => s.Email == email).Select(s => s.Id).FirstOrDefaultAsync();
             return userID;
         }
         catch (Exception)
