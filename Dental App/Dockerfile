@@ -1,26 +1,20 @@
 # Multi stage Docker Image Build
-#----------------------------   1   ----------------------------#
 
-
-FROM mcr.microsoft.com/dotnet/sdk:6.0.402 AS build-env
-
-WORKDIR /app
-
-COPY *.csproj ./
-
-RUN dotnet restore
-
+# Build Stage
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /source
+COPY . .
+RUN dotnet restore "./Dental App.csproj" --disable-parallel
 COPY . ./
+RUN dotnet publish "./Dental App.csproj" -c release -o /app
 
-RUN dotnet publish -c Release -o out
-
-#----------------------------   2   ----------------------------#
-
+# Serve Stage
 FROM mcr.microsoft.com/dotnet/sdk:7.0
-
 WORKDIR /app
+COPY --from=build /app ./
 
-COPY --from=build-env /app/out .
+EXPOSE 5000
 
-ENTRYPOINT ["dotnet", "aspnetcoreapp.dll"]
+
+ENTRYPOINT ["dotnet", "Dental App.dll"]
 
