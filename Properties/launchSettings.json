@@ -1,4 +1,5 @@
 ﻿{
+  "Urls": "http://[::]:80;https://[::]:443",
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
@@ -33,6 +34,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger",
+      "applicationUrl": "http://[::]:80;https://[::]:443",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
