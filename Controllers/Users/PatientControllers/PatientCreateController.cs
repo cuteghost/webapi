@@ -1,8 +1,8 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Models.DTO.UserDTO.Patient;
+﻿using Models.Domain;
+using Models.DTO.UserDTO.Patient;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dental_App.Controllers.Users.PatientControllers;
+namespace Controllers.Users.PatientControllers;
 public partial class PatientController : Controller
 {
     [HttpPost]

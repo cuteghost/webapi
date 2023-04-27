@@ -1,6 +1,6 @@
-using Dental_App.Models.DTO.InvoiceDTO;
+using Models.DTO.InvoiceDTO;
 
-namespace Dental_App.Profiles.Invoice;
+namespace Profiles.Invoice;
 public class InvoiceProfiles : AutoMapper.Profile
 {
 	public InvoiceProfiles()

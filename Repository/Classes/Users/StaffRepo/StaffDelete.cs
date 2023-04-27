@@ -1,6 +1,6 @@
-﻿using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
+﻿using Repository.Interfaces.Users.StaffInterfaces;
 
-namespace Dental_App.Repository.Classes.Users.Staff;
+namespace Repository.Classes.Users.StaffRepo;
 
 public class StaffDelete : IStaffDelete
 {

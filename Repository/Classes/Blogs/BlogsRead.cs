@@ -1,9 +1,9 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Repository.Interfaces.BlogsInterfaces;
+﻿using Models.Domain;
+using Repository.Interfaces.BlogsInterfaces;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
 
-namespace Dental_App.Repository.Classes.BlogsRepo;
+namespace Repository.Classes.BlogsRepo;
 public class BlogsRead : IBlogsRead
 {
     private readonly DentalDBContext _dbContext;

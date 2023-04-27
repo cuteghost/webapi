@@ -1,6 +1,6 @@
-﻿using Dental_App.Models.Domain;
+﻿using Models.Domain;
 
-namespace Dental_App.Repository.Interfaces.Users.StaffInterfaces;
+namespace Repository.Interfaces.Users.StaffInterfaces;
 
 public interface IStaffCreate
 {

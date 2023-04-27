@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Dental_App.Validations.Common.Validations;
+namespace Validations.Common.Validations;
 public interface IValidationsService
 {
     public ValidationModel GetValidationModel(string message, int statusCode, bool resultOfValidations);    

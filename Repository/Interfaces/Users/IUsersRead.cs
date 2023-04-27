@@ -1,4 +1,4 @@
-﻿namespace Dental_App.Repository.Interfaces.Users;
+﻿namespace Repository.Interfaces.Users;
 public interface IUsersRead
 {
     public Task<long> GetUserByJMBG(string jmbg);

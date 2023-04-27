@@ -22,7 +22,7 @@ namespace DentalApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Dental_App.Models.Domain.Blog", b =>
+            modelBuilder.Entity("Models.Domain.Blog", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -51,7 +51,7 @@ namespace DentalApp.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("Dental_App.Models.Domain.Patient", b =>
+            modelBuilder.Entity("Models.Domain.Patient", b =>
                 {
                     b.Property<long>("PatientId")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace DentalApp.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Dental_App.Models.Domain.Staff", b =>
+            modelBuilder.Entity("Models.Domain.Staff", b =>
                 {
                     b.Property<long>("StaffId")
                         .ValueGeneratedOnAdd()
@@ -139,7 +139,7 @@ namespace DentalApp.Migrations
                     b.ToTable("Staff");
                 });
 
-            modelBuilder.Entity("Dental_App.Models.Domain.User", b =>
+            modelBuilder.Entity("Models.Domain.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -213,9 +213,9 @@ namespace DentalApp.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("Dental_App.Models.Domain.Blog", b =>
+            modelBuilder.Entity("Models.Domain.Blog", b =>
                 {
-                    b.HasOne("Dental_App.Models.Domain.User", "Creator")
+                    b.HasOne("Models.Domain.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -224,9 +224,9 @@ namespace DentalApp.Migrations
                     b.Navigation("Creator");
                 });
 
-            modelBuilder.Entity("Dental_App.Models.Domain.Patient", b =>
+            modelBuilder.Entity("Models.Domain.Patient", b =>
                 {
-                    b.HasOne("Dental_App.Models.Domain.User", "User")
+                    b.HasOne("Models.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -235,9 +235,9 @@ namespace DentalApp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Dental_App.Models.Domain.Staff", b =>
+            modelBuilder.Entity("Models.Domain.Staff", b =>
                 {
-                    b.HasOne("Dental_App.Models.Domain.User", "User")
+                    b.HasOne("Models.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

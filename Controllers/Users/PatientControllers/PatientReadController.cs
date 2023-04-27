@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Dental_App.Controllers.Users.PatientControllers;
+namespace Controllers.Users.PatientControllers;
 public partial class PatientController : Controller
 {
     [HttpGet]

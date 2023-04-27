@@ -1,4 +1,4 @@
-﻿using Dental_App.Models.Domain;
+﻿using Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace server.Database;

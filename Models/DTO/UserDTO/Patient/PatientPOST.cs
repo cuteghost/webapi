@@ -1,6 +1,6 @@
-﻿using Dental_App.Models.Domain;
+﻿using Models.Domain;
 
-namespace Dental_App.Models.DTO.UserDTO.Patient;
+namespace Models.DTO.UserDTO.Patient;
 public class PatientPOST : UserPost
 {
     public User User { get; set; } = new User();

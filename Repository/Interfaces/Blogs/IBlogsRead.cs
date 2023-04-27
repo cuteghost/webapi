@@ -1,5 +1,5 @@
-﻿using Dental_App.Models.Domain;
-namespace Dental_App.Repository.Interfaces.BlogsInterfaces;
+﻿using Models.Domain;
+namespace Repository.Interfaces.BlogsInterfaces;
 
 public interface IBlogsRead
 {

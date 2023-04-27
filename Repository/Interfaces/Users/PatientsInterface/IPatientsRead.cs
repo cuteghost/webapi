@@ -1,6 +1,6 @@
-﻿using Dental_App.Models.DTO.UserDTO.Patient;
+﻿using Models.DTO.UserDTO.Patient;
 
-namespace Dental_App.Repository.Interfaces.Users.PatientsInterface;
+namespace Repository.Interfaces.Users.PatientsInterface;
 
 public interface IPatientsRead
 {

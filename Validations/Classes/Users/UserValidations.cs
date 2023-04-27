@@ -1,11 +1,11 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Models.DTO.UserDTO;
-using Dental_App.Repository.Interfaces.Users;
-using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
-using Dental_App.Validations.Common.Validations;
-using Dental_App.Validations.Interfaces.Users;
+﻿using Models.Domain;
+using Models.DTO.UserDTO;
+using Repository.Interfaces.Users;
+using Repository.Interfaces.Users.StaffInterfaces;
+using Validations.Common.Validations;
+using Validations.Interfaces.Users;
 
-namespace Dental_App.Validations.Classes.Users;
+namespace Validations.Classes.Users;
 public class UserValidations : IUserValidations
 {
     private readonly IValidationsService _validationsService;
@@ -26,9 +26,9 @@ public class UserValidations : IUserValidations
     }
     public async Task<ValidationModel> ValidatePATCHRequest(UserPatch user)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id","BirthDate","Gender","Joined","Email"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id","StaffId","BirthDate","Gender","Joined","Email"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
-        validationResult = await ValidateUniqueFields(user.JMBG,0);
+        validationResult = await ValidateUniqueFields(user.JMBG,user.Id);
         return validationResult;
     }
     public async Task<ValidationModel> ValidateDELETERequest(long adminId, long UserId)

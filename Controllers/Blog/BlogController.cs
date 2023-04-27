@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Dental_App.Repository.Interfaces.BlogsInterfaces;
-using Dental_App.Validations.Interfaces.Blogs;
+using Repository.Interfaces.BlogsInterfaces;
+using Validations.Interfaces.Blogs;
 using Microsoft.AspNetCore.Mvc;
 using Services.ResponseService;
 
-namespace Dental_App.Controllers.Users.BlogControllers;
+namespace Controllers.Users.BlogControllers;
 [ApiController]
 [Route("/api/[controller]")]
 

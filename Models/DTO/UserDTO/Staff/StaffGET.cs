@@ -1,6 +1,7 @@
-﻿namespace Dental_App.Models.DTO.UserDTO.Staff
+﻿namespace Models.DTO.UserDTO.Staff;
+public class StaffGet : UserGet
 {
-    public class StaffGet
-    {
-    }
+    public string Certification {get;set;} = string.Empty;
+    public string Education {get;set;} = string.Empty;
+    public string Languages{get;set;} = string.Empty;
 }
