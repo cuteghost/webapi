@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Dental_App.Models.Domain;
-using Dental_App.Models.DTO.UserDTO.Patient;
+using Models.Domain;
+using Models.DTO.UserDTO.Patient;
 
-namespace Dental_App.Profiles.Users;
+namespace Profiles.Users;
 public class PatientsProfiles : Profile
 {
 	public PatientsProfiles()

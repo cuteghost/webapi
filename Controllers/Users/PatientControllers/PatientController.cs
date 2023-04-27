@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Dental_App.Repository.Interfaces.Users.PatientsInterface;
-using Dental_App.Validations.Interfaces.Users;
+using Repository.Interfaces.Users.PatientsInterface;
+using Validations.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 using Services.ResponseService;
 
-namespace Dental_App.Controllers.Users.PatientControllers;
+namespace Controllers.Users.PatientControllers;
 
 [ApiController]
 [Route("api/[controller]")]

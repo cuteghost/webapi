@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dental_App.Models.DTO.BlogDTO;
+namespace Models.DTO.BlogDTO;
 public class BlogPOST
 {
     public long CreatorId { get; set; }

@@ -1,5 +1,5 @@
-﻿using Dental_App.Models.Domain;
-namespace Dental_App.Models.DTO.UserDTO.Patient;
+﻿using Models.Domain;
+namespace Models.DTO.UserDTO.Patient;
 public class PatientPATCH : UserPatch
 {
     public long PatientId { get; set; }

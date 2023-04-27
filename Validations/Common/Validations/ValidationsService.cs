@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Services.PropertyService;
 
-namespace Dental_App.Validations.Common.Validations;
+namespace Validations.Common.Validations;
 public class ValidationsService : IValidationsService
 {
     private readonly IPropertyService _propertyService;

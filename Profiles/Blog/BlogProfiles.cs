@@ -1,6 +1,6 @@
-﻿using Dental_App.Models.DTO.BlogDTO;
+﻿using Models.DTO.BlogDTO;
 
-namespace Dental_App.Profiles.Blog;
+namespace Profiles.Blog;
 public class BlogProfiles : AutoMapper.Profile
 {
 	public BlogProfiles()

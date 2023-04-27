@@ -1,8 +1,8 @@
-﻿using Dental_App.Repository.Interfaces.Users.PatientsInterface;
+﻿using Repository.Interfaces.Users.PatientsInterface;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
 
-namespace Dental_App.Repository.Classes.Users.PatientsRepo;
+namespace Repository.Classes.Users.PatientsRepo;
 
 public class PatientsDelete : IPatientsDelete
 {

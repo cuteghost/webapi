@@ -1,14 +1,12 @@
-using Dental_App.Repository.Classes.Users;
-using Dental_App.Repository.Classes.Users.PatientsRepo;
-using Dental_App.Repository.Classes.Users.Staff;
-using Dental_App.Repository.Classes.Users.StaffRepo;
-using Dental_App.Repository.Interfaces.Users;
-using Dental_App.Repository.Interfaces.Users.PatientsInterface;
-using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
-using Dental_App.Repository.Interfaces.Users.StaffRepo;
-using Dental_App.Validations.Classes.Users;
-using Dental_App.Validations.Common.Validations;
-using Dental_App.Validations.Interfaces.Users;
+using Repository.Classes.Users;
+using Repository.Classes.Users.PatientsRepo;
+using Repository.Classes.Users.StaffRepo;
+using Repository.Interfaces.Users;
+using Repository.Interfaces.Users.PatientsInterface;
+using Repository.Interfaces.Users.StaffInterfaces;
+using Validations.Classes.Users;
+using Validations.Common.Validations;
+using Validations.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
 using Services.PropertyService;
@@ -69,7 +67,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

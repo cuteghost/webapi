@@ -1,8 +1,8 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
+﻿using Models.Domain;
+using Repository.Interfaces.Users.StaffInterfaces;
 using server.Database;
 
-namespace Dental_App.Repository.Interfaces.Users.StaffRepo;
+namespace Repository.Classes.Users.StaffRepo;
 
 
 public class StaffCreate : IStaffCreate

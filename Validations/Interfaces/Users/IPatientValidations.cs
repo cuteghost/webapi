@@ -1,7 +1,7 @@
-﻿using Dental_App.Models.DTO.UserDTO.Patient;
-using Dental_App.Validations.Common.Validations;
+﻿using Models.DTO.UserDTO.Patient;
+using Validations.Common.Validations;
 
-namespace Dental_App.Validations.Interfaces.Users;
+namespace Validations.Interfaces.Users;
 public interface IPatientValidations
 {
     public Task<ValidationModel> ValidatePOSTRequest(PatientPOST newPatient);

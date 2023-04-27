@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Dental_App.Models.Domain;
+using Models.Domain;
 
-namespace Dental_App.Models.DTO.UserDTO;
+namespace Models.DTO.UserDTO;
     public class UserPost
     {
         [MaxLength(15)]

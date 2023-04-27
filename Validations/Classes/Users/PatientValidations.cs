@@ -1,8 +1,8 @@
-﻿using Dental_App.Models.DTO.UserDTO.Patient;
-using Dental_App.Validations.Common.Validations;
-using Dental_App.Validations.Interfaces.Users;
+﻿using Models.DTO.UserDTO.Patient;
+using Validations.Common.Validations;
+using Validations.Interfaces.Users;
 
-namespace Dental_App.Validations.Classes.Users;
+namespace Validations.Classes.Users;
 public class PatientValidations : IPatientValidations
 {
     public readonly IUserValidations _userValidations;  

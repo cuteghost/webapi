@@ -1,4 +1,4 @@
-﻿namespace Dental_App.Models.DTO.BlogDTO;
+﻿namespace Models.DTO.BlogDTO;
 public class BlogGet
 {
     public string Creator { get; set; } = string.Empty;
