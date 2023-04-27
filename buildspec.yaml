@@ -8,7 +8,7 @@ phases:
       - aws ecr get-login-password|docker login -u AWS --password-stdin "$ECR_REPOSITORY_URI"
   build:
     commands:
-      - docker build -e ASPNETCORE_URLS=https://+;http://+ -e ASPNETCORE_HTTPS_PORTS=8081 ASPNETCORE_Kestrel__Certificates__Default__Password=password ASPNETCORE_Kestrel__Certificates__Default__Path=/https/webapi.pfx -f Dockerfile .
+      - docker build -f Dockerfile . -t fit-p2221-webapi
   post_build:
     commands:
       - docker push --disable-content-trust "$ECR_REPOSITORY_URI:$IMAGE_TAG"
