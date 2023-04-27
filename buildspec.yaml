@@ -6,6 +6,9 @@ phases:
       - COMMIT_HASH=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION"|cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
       - aws ecr get-login-password|docker login -u AWS --password-stdin "$ECR_REPOSITORY_URI"
+      - echo "Ja se nalazim u"
+      - pwd
+      - ls
   build:
     commands:
       - docker build -f Dockerfile .
