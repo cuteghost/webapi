@@ -1,8 +1,8 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Models.DTO.UserDTO.Staff;
+﻿using Models.Domain;
+using Models.DTO.UserDTO.Staff;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dental_App.Controllers.Users.StaffControllers;
+namespace Controllers.Users.StaffControllers;
 public partial class StaffController : Controller
 {
     [HttpPost]

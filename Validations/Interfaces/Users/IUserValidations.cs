@@ -1,8 +1,8 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Models.DTO.UserDTO;
-using Dental_App.Validations.Common.Validations;
+﻿using Models.Domain;
+using Models.DTO.UserDTO;
+using Validations.Common.Validations;
 
-namespace Dental_App.Validations.Interfaces.Users;
+namespace Validations.Interfaces.Users;
 public interface IUserValidations
 {
 

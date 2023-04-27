@@ -1,0 +1,21 @@
+---
+name: Push Release
+on:
+  release:
+    types:
+      - released
+jobs:
+  push-to-release-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 0
+          ref: master
+      - name: Push to release
+        run: |
+          TAG="$(git describe --abbrev=0 --tags)"
+          git switch -c release
+          git merge "${TAG}"
+          git push --set-upstream origin release

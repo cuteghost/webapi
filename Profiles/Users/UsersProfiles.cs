@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Dental_App.Models.Domain;
-using Dental_App.Models.DTO.UserDTO;
-using Dental_App.Models.DTO.UserDTO.Staff;
+using Models.Domain;
+using Models.DTO.UserDTO;
+using Models.DTO.UserDTO.Staff;
 
-namespace Dental_App.Profiles.Users;
+namespace Profiles.Users;
 
     public class UsersProfiles : Profile
     {

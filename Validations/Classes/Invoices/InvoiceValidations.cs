@@ -1,4 +1,4 @@
-using Dental_App.Validations.Common.Validations;
+using Validations.Common.Validations;
 using Validations.Interfaces.Invoices;
 
 namespace Validations.Classes.Invoices;

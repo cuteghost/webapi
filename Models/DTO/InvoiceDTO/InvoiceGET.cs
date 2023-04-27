@@ -1,4 +1,4 @@
-namespace Dental_App.Models.DTO.InvoiceDTO;
+namespace Models.DTO.InvoiceDTO;
 public class InvoiceGET
 {
     public DateTime InvoiceDate {get;set;} = DateTime.Now;

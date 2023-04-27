@@ -1,8 +1,8 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Repository.Interfaces.Users.PatientsInterface;
+﻿using Models.Domain;
+using Repository.Interfaces.Users.PatientsInterface;
 using server.Database;
 
-namespace Dental_App.Repository.Classes.Users.PatientsRepo;
+namespace Repository.Classes.Users.PatientsRepo;
 
 public class PatientsCreate : IPatientsCreate
 {

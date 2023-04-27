@@ -1,4 +1,4 @@
-﻿namespace Dental_App.Validations.Common.Validations;
+﻿namespace Validations.Common.Validations;
 public class ValidationModel
 {
     public int StatusCode { get; set; } = 0;

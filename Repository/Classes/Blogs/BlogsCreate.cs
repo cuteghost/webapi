@@ -1,8 +1,8 @@
-﻿using Dental_App.Models.Domain;
-using Dental_App.Repository.Interfaces.BlogsInterfaces;
+﻿using Models.Domain;
+using Repository.Interfaces.BlogsInterfaces;
 using server.Database;
 
-namespace Dental_App.Repository.Classes.BlogsRepo;
+namespace Repository.Classes.BlogsRepo;
 public class BlogsCreate : IBlogsCreate
 {
     private readonly DentalDBContext _dbContext;

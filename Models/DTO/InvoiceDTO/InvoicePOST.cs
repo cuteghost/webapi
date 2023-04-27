@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace Dental_App.Models.DTO.InvoiceDTO;
+namespace Models.DTO.InvoiceDTO;
 public class InvoicePOST
 {
     [Required]

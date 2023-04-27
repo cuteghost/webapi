@@ -1,4 +1,4 @@
-﻿namespace Dental_App.Models.DTO.UserDTO
+﻿namespace Models.DTO.UserDTO
 {
     public class UserGet
     {

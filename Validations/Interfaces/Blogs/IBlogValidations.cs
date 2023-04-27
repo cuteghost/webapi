@@ -1,7 +1,7 @@
-﻿using Dental_App.Models.DTO.BlogDTO;
-using Dental_App.Validations.Common.Validations;
+﻿using Models.DTO.BlogDTO;
+using Validations.Common.Validations;
 
-namespace Dental_App.Validations.Interfaces.Blogs;
+namespace Validations.Interfaces.Blogs;
 public interface IBlogValidations
 {
     public Task<bool> ValidateBlogCreatorRole(long creatorId);

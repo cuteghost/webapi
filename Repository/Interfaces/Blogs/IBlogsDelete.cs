@@ -1,4 +1,4 @@
-﻿namespace Dental_App.Repository.Interfaces.BlogsInterfaces;
+﻿namespace Repository.Interfaces.BlogsInterfaces;
 
 public interface IBlogsDelete
 {

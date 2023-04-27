@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Dental_App.Models.Domain;
-using Dental_App.Models.DTO.UserDTO.Staff;
+using Models.Domain;
+using Models.DTO.UserDTO.Staff;
 
 namespace server.Profiles
 {
@@ -10,6 +10,7 @@ namespace server.Profiles
         {
             CreateMap<StaffPost,Staff>();
             CreateMap<StaffPatch,Staff>();
+            CreateMap<Staff,StaffGet>();
         }
     }
 }

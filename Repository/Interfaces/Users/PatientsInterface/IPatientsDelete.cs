@@ -1,4 +1,4 @@
-﻿namespace Dental_App.Repository.Interfaces.Users.PatientsInterface;
+﻿namespace Repository.Interfaces.Users.PatientsInterface;
 
 public interface IPatientsDelete
 {

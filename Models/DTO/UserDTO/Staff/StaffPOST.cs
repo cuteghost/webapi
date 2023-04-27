@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dental_App.Models.DTO.UserDTO.Staff
+namespace Models.DTO.UserDTO.Staff
 {
     public class StaffPost : UserPost
     {

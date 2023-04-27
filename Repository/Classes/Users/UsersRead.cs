@@ -1,8 +1,8 @@
-﻿using Dental_App.Repository.Interfaces.Users;
+﻿using Repository.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
 
-namespace Dental_App.Repository.Classes.Users;
+namespace Repository.Classes.Users;
 public class UsersRead : IUsersRead
 {
     private readonly DentalDBContext _dbContext;

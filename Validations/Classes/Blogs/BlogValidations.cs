@@ -1,10 +1,10 @@
-﻿using Dental_App.Models.DTO.BlogDTO;
-using Dental_App.Repository.Interfaces.BlogsInterfaces;
-using Dental_App.Repository.Interfaces.Users.StaffInterfaces;
-using Dental_App.Validations.Common.Validations;
-using Dental_App.Validations.Interfaces.Blogs;
+﻿using Models.DTO.BlogDTO;
+using Repository.Interfaces.BlogsInterfaces;
+using Repository.Interfaces.Users.StaffInterfaces;
+using Validations.Common.Validations;
+using Validations.Interfaces.Blogs;
 
-namespace Dental_App.Validations.Classes.Blogs;
+namespace Validations.Classes.Blogs;
 public class BlogValidations : IBlogValidations
 {
     private readonly IBlogsRead _blogReadService;
