@@ -10,6 +10,7 @@ phases:
       - docker build -t ${ECR_REPOSITORY_URI}:latest "$ECR_REPOSITORY_URI:$IMAGE_TAG" -f Dockerfile .
   post_build:
     commands:
+      - docker push --disable-content-trust ${ECR_REPOSITORY_URI}:latest
       - docker push --disable-content-trust "$ECR_REPOSITORY_URI:$IMAGE_TAG"
       - printf '[{"name":"app","imageUri":"%s"}]' "${ECR_REPOSITORY_URI}:${IMAGE_TAG}" > imagedefinitions.json
 artifacts:
