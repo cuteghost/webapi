@@ -19,14 +19,14 @@ public class UserValidations : IUserValidations
     }
     public async Task<ValidationModel> ValidatePOSTRequest(UserPost newUser)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(newUser,new string[] {"BirthDate","Gender","Joined","Email"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(newUser,new string[] {"BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
         validationResult = await ValidateUniqueFields(newUser.JMBG,0);
         return validationResult;
     }
     public async Task<ValidationModel> ValidatePATCHRequest(UserPatch user)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id","StaffId","BirthDate","Gender","Joined","Email"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id","StaffId","BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
         validationResult = await ValidateUniqueFields(user.JMBG,user.Id);
         return validationResult;
@@ -45,7 +45,7 @@ public class UserValidations : IUserValidations
         return new ValidationModel{
                 ValidationMessage=$"User with Id: {UserId} deleted successfuly!",
                 StatusCode = 201,
-                ResultOfValidations = false
+                ResultOfValidations = true
             };
     }
     public async Task<ValidationModel> ValidatePOSTAndPATCHRequest(User user)
