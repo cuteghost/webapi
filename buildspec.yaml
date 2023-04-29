@@ -3,8 +3,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - COMMIT_HASH=$(echo "$CODEBUILD_RESOLVED_SOURCE_VERSION"|cut -c 1-7)
-      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - IMAGE_TAG="$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION} | shasum | head -c 8)"
       - aws ecr get-login-password|docker login -u AWS --password-stdin "$ECR_REPOSITORY_URI"
   build:
     commands:
@@ -12,7 +11,7 @@ phases:
   post_build:
     commands:
       - docker push --disable-content-trust "$ECR_REPOSITORY_URI:$IMAGE_TAG"
-      - echo "[{\"name\":\"app\",\"imageUri\":\"$ECR_REPOSITORY_URI:$IMAGE_TAG\"}]" >"$CODEBUILD_SRC_DIR/imagedefinitions.json"
+      - printf '[{"name":"app","imageUri":"%s"}]' "${ECR_REPOSITORY_URI}:${IMAGE_TAG}" > imagedefinitions.json
 artifacts:
   files:
     - imagedefinitions.json
