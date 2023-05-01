@@ -1,16 +1,21 @@
 using Repository.Classes.Users;
 using Repository.Classes.Users.PatientsRepo;
 using Repository.Classes.Users.StaffRepo;
+using Repository.Classes.InvoicesRepo;
 using Repository.Interfaces.Users;
 using Repository.Interfaces.Users.PatientsInterface;
 using Repository.Interfaces.Users.StaffInterfaces;
+using Repository.Interfaces.InvoicesInterfaces;
 using Validations.Classes.Users;
 using Validations.Common.Validations;
+using Validations.Classes.Invoices;
 using Validations.Interfaces.Users;
+using Validations.Interfaces.Invoices;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
 using Services.PropertyService;
 using Services.ResponseService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +60,13 @@ builder.Services.AddScoped<IPatientValidations, PatientValidations>();
 builder.Services.AddScoped<IUserValidations, UserValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
 /*----------------------------------------------------------------------*/
+builder.Services.AddScoped<IInvoicesCreate, InvoicesCreate>();
+builder.Services.AddScoped<IInvoicesRead, InvoicesRead>();
+builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
+builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
+builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
+builder.Services.AddScoped<IValidationsService, ValidationsService>();
+
 
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
