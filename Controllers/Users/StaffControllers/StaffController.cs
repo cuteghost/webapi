@@ -5,11 +5,12 @@ using Repository.Interfaces.Users.StaffInterfaces;
 using Validations.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 using Services.ResponseService;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Controllers.Users.StaffControllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public partial class StaffController : Controller
 {
     private readonly IStaffCreate _staffCreateRepository;
