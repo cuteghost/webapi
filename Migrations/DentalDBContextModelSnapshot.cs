@@ -8,7 +8,7 @@ using server.Database;
 
 #nullable disable
 
-namespace DentalApp.Migrations
+namespace webapi.Migrations
 {
     [DbContext(typeof(DentalDBContext))]
     partial class DentalDBContextModelSnapshot : ModelSnapshot

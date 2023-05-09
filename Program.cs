@@ -1,7 +1,3 @@
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Identity;
 using Repository.Classes.Users;
 using Repository.Classes.Users.PatientsRepo;
 using Repository.Classes.Users.StaffRepo;
@@ -19,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using server.Database;
 using Services.PropertyService;
 using Services.ResponseService;
+using Services.TokenHandlerService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,11 +41,7 @@ builder.Services.AddDbContext<DentalDBContext>(options =>
         Console.WriteLine("ERROR: Unable to connect to SQL server(Main)");
     }
 });
-/* AuthDB Connection */
-builder.Services.AddDbContext<AuthDBContext>(options => 
 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"))
-);
 /* helpServices */
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IResponseService, ResponseService>();
@@ -75,39 +68,12 @@ builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
 builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
 builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
-
+/*--------------------------------------------------------------------*/
+builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
+builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
-builder.Services.AddIdentityCore<IdentityUser>()
-.AddRoles<IdentityRole>()
-.AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("webapi")
-.AddEntityFrameworkStores<AuthDBContext>()
-.AddDefaultTokenProviders();
-
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase= true;
-    options.Password.RequireUppercase= true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 8;
-    options.Password.RequiredUniqueChars = 1;
-} 
-);
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => 
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["JWT:issuer"],
-        ValidAudience = builder.Configuration["JWT:audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:key"])),
-    });
 
 var app = builder.Build();
 

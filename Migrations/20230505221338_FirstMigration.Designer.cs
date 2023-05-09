@@ -9,11 +9,11 @@ using server.Database;
 
 #nullable disable
 
-namespace webapi.Migrations.DentalDB
+namespace webapi.Migrations
 {
     [DbContext(typeof(DentalDBContext))]
-    [Migration("20230502190737_First docker DB migration")]
-    partial class FirstdockerDBmigration
+    [Migration("20230505221338_FirstMigration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
