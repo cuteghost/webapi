@@ -15,7 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using server.Database;
 using Services.PropertyService;
 using Services.ResponseService;
-
+using Repository.Interfaces.TreatmentInterfaces;
+using Repository.Classes.TreatmentsRepo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,7 +67,11 @@ builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
 builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
 builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
-
+/**************************************************************************/
+builder.Services.AddScoped<ITreatmentsCreate, TreatmentsCreate>();
+builder.Services.AddScoped<ITreatmentsRead, TreatmentsRead>();
+builder.Services.AddScoped<ITreatmentsUpdate, TreatmentsUpdate>();
+builder.Services.AddScoped<ITreatmentsDelete, TreatmentsDelete>();
 
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

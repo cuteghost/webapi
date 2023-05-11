@@ -13,4 +13,5 @@ public class DentalDBContext : DbContext
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Blog> Blogs { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
+    public DbSet<Treatment> Treatments { get; set; }
 }

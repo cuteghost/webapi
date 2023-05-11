@@ -16,6 +16,6 @@ public class InvoicePOST
     public string Currency{get;set;} = string.Empty;
     [Required]
     [Column(TypeName ="decimal(18,2)")]
-    public float AmountRefused {get;set;}   
+    public float AmountRefused {get;set;}
 
 }
