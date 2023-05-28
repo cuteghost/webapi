@@ -5,11 +5,12 @@ using Services.TokenHandlerService;
 using Services.ResponseService;
 using Models.DTO.AuthDTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Controllers.Users.Auth
 {
     [ApiController]
-    [Route("User/Auth/Login")]
+    [Route("User/Auth")]
     public class LoginController : Controller
     {
         private readonly ILoginRepo _loginRepo;
@@ -24,15 +25,18 @@ namespace Controllers.Users.Auth
             this._mapper = mapper;
         }
         [HttpPost]
-        public async Task<IActionResult> LoginAsync(LoginDTO user)
+        [Route("Login")]
+        public async Task<IActionResult> LoginAsync(LoginPOSTDTO login)
         {
-            var validUser = await _loginRepo.Login(user);
+            var loginDto = _mapper.Map<LoginDTO>(login);
+            
+            var validUser = await _loginRepo.Login(loginDto);
             if(validUser != null)
             {
                 var tempUser = _mapper.Map<LoginDTO>(validUser);
                 TokenDTO loginResponse = new()
                 {
-                    Email = user.Email,
+                    Email = loginDto.Email,
                     Token = await _tokenHandler.CreateTokenAsync(tempUser)
                 };
                 
@@ -43,6 +47,14 @@ namespace Controllers.Users.Auth
                 return await _responseService.Response(401, "Unauthorized!");
             }
         }
+        
 
+        [HttpGet]
+        [Route("CheckAuthentication")]
+        [Authorize]
+        public IActionResult CheckAuthentication()
+        {
+            return Ok();  // User is authenticated   
+        }
     }
 }

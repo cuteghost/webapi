@@ -15,6 +15,7 @@ namespace Profiles.Users;
             CreateMap<PatientPOST, User>();
             CreateMap<PatientPATCH, User>();
             CreateMap<LoginDTO, User>().ReverseMap();
+            CreateMap<LoginDTO, LoginPOSTDTO>().ReverseMap();
             
         }
     }

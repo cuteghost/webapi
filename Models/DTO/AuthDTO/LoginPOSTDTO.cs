@@ -1,17 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Models.DTO.Auth
+namespace Models.DTO.AuthDTO
 {
-    public class RegisterRequestDTO
+    public class LoginPOSTDTO
     {
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string Username { get; set;}
+        public string Email { get; set;}
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set;}
-        public string[] Roles { get; set; }
-
 
     }
 }

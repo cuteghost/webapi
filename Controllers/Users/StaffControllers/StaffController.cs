@@ -10,6 +10,7 @@ namespace Controllers.Users.StaffControllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 // [Authorize]
 public partial class StaffController : Controller
 {

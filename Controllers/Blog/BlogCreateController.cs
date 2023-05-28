@@ -1,12 +1,14 @@
 ﻿using Models.Domain;
 using Models.DTO.BlogDTO;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Controllers.Users.BlogControllers;
 
 public partial class BlogController : Controller
 {
     [HttpPost]
+    [Authorize]
     [Route("create")]
     public async Task<IActionResult> CreateBlogAsync(BlogPOST newBlogDTO)
     {

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Controllers.Users.PatientControllers;
 
 [ApiController]
-// [Authorize]
+[Authorize]
 [Route("api/[controller]")]
 
 public partial class PatientController : Controller
