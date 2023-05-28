@@ -3,9 +3,11 @@ using Repository.Interfaces.InvoicesInterfaces;
 using Validations.Interfaces.Invoices;
 using Microsoft.AspNetCore.Mvc;
 using Services.ResponseService;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Controllers.Users.InvoiceControllers;
 [ApiController]
+[Authorize]
 [Route("/api/[controller]")]
 
 public partial class InvoiceController : Controller

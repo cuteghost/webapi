@@ -3,11 +3,13 @@ using Repository.Interfaces.Users.PatientsInterface;
 using Validations.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 using Services.ResponseService;
-
+using Microsoft.AspNetCore.Authorization;
 namespace Controllers.Users.PatientControllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
+
 public partial class PatientController : Controller
 {
     private readonly IPatientsCreate _patientCreateRepository;

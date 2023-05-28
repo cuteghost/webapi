@@ -34,8 +34,7 @@ public class User
     public string Email { get; set; } = string.Empty;
     [Required]
     [Column(TypeName = "nvarchar")]
-    [MaxLength(16)]
-    [MinLength(8)]
+    [MaxLength(512)]
     public string Password { get; set; } = string.Empty;
 }
 public enum Gender

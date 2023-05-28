@@ -15,7 +15,10 @@ using Microsoft.EntityFrameworkCore;
 using server.Database;
 using Services.PropertyService;
 using Services.ResponseService;
-
+using Services.TokenHandlerService;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +43,7 @@ builder.Services.AddDbContext<DentalDBContext>(options =>
         Console.WriteLine("ERROR: Unable to connect to SQL server(Main)");
     }
 });
+
 /* helpServices */
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IResponseService, ResponseService>();
@@ -66,10 +70,33 @@ builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
 builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
 builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
+/*--------------------------------------------------------------------*/
+builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
+builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 
-
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    });
+    
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("FirstPolicy", builder => 
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+    });
+});
 
 var app = builder.Build();
 
@@ -85,7 +112,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.UseCors("FirstPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
