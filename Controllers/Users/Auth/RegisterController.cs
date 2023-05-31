@@ -33,7 +33,7 @@ namespace Controllers.Users.Auth
             {
                 var userDomain = _mapper.Map<User>(newPatientDTO);
                 var patientDomain = _mapper.Map<Patient>(newPatientDTO);
-                await _patientCreateRepository.CreatePatientAsync(userDomain, patientDomain);
+                await _patientCreateRepository.CreatePatientAsync(userDomain, patientDomain);                
             }
             return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
         }

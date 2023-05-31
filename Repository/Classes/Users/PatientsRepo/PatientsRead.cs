@@ -1,4 +1,6 @@
-﻿using Models.DTO.UserDTO.Patient;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.Domain;
+using Models.DTO.UserDTO.Patient;
 using Repository.Interfaces.Users.PatientsInterface;
 using server.Database;
 
@@ -31,5 +33,10 @@ public class PatientsRead : IPatientsRead
             staffMembers.Add(staffMember);
         }
         return await Task.FromResult(staffMembers);
+    }
+
+    public async Task<Patient> ReadPatientByEmail(string email)
+    {
+        return await _dbContext.Patients.Include(s => s.User).Where(s => s.User.Email == email).AsNoTracking().FirstAsync();
     }
 }

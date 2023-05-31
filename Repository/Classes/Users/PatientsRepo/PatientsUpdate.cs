@@ -1,4 +1,6 @@
-﻿using Models.Domain;
+﻿using System.Security.Cryptography;
+using System.Text;
+using Models.Domain;
 using Repository.Interfaces.Users.PatientsInterface;
 using server.Database;
 
@@ -17,6 +19,7 @@ public class PatientsUpdate : IPatientsUpdate
     {
         try
         {
+            user.Password = HashPassword(user.Password);
             _dbContext.Update(user);
             await _dbContext.SaveChangesAsync();
 
@@ -30,5 +33,26 @@ public class PatientsUpdate : IPatientsUpdate
 
             throw;
         }
+    }
+
+
+    public string HashPassword(string password)
+    {
+        StringBuilder Sb = new StringBuilder();
+
+
+        using (SHA256 hash = SHA256Managed.Create()) {
+
+            Encoding enc = Encoding.UTF8;
+
+            Byte[] result = hash.ComputeHash(enc.GetBytes(password));
+
+
+            foreach (Byte b in result)
+
+            Sb.Append(b.ToString("x2"));
+
+        }
+        return Sb.ToString();   
     }
 }
