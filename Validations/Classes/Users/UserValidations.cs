@@ -94,8 +94,8 @@ public class UserValidations : IUserValidations
     }
     public async Task<bool> ValidateEmailUnique(string email, long UserId)
     {
-        
-        if(await _usersReadRepository.GetUserByEmail(email) != 0) { return false; }
+        var id = await _usersReadRepository.GetUserByEmail(email);
+        if(id != UserId && id != 0) { return false; }
         return true;
     }
 }

@@ -20,9 +20,9 @@ public class PatientsUpdate : IPatientsUpdate
         try
         {
             user.Password = HashPassword(user.Password);
-            _dbContext.Update(user);
-            await _dbContext.SaveChangesAsync();
-
+            //_dbContext.Update(user);
+            //await _dbContext.SaveChangesAsync();
+            patient.User = user;
             _dbContext.Update(patient);
             await _dbContext.SaveChangesAsync();
 
