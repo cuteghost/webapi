@@ -37,6 +37,6 @@ public class PatientsRead : IPatientsRead
 
     public async Task<Patient> ReadPatientByEmail(string email)
     {
-        return await _dbContext.Patients.Include(s => s.User).Where(s => s.User.Email == email).AsNoTracking().FirstAsync();
+        return await _dbContext.Patients.Include(s => s.User).Where(s => s.User.Email == email).AsNoTracking().FirstOrDefaultAsync();
     }
 }

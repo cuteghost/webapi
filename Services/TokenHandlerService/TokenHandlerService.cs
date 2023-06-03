@@ -32,5 +32,14 @@ namespace Services.TokenHandlerService
             return await Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
             
         }
+
+        public string GetEmailFromJWT(string token)
+        {
+            token = token.Remove(0,7);
+            var handler = new JwtSecurityTokenHandler();
+            var jwtAuth = handler.ReadJwtToken(token);
+            var tokenEmail = jwtAuth.Claims.First(c => c.Type == ClaimTypes.Email).Value;
+            return tokenEmail;
+        }
     }
 }
