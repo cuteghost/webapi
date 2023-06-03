@@ -20,8 +20,8 @@ public partial class PatientController : Controller
         var user = await _patientReadRepository.ReadPatientByEmail(tokenEmail);
 
         
-        patientDTO.PatientId = user.PatientId;
-        patientDTO.Id = user.User.Id;
+        // patientDTO.PatientId = user.PatientId;
+        // patientDTO.Id = user.User.Id;
         var validationResult = await _patientValidations.ValidatePATCHRequest(patientDTO);
         if (validationResult.ResultOfValidations == true)
         {

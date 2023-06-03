@@ -35,8 +35,31 @@ public class PatientsRead : IPatientsRead
         return await Task.FromResult(staffMembers);
     }
 
-    public async Task<Patient> ReadPatientByEmail(string email)
+    public async Task<PatientGET> ReadPatientByEmail(string email)
     {
-        return await _dbContext.Patients.Include(s => s.User).Where(s => s.User.Email == email).AsNoTracking().FirstOrDefaultAsync();
+        var query = await (from patients in _dbContext.Patients
+                    join users in _dbContext.Users on patients.User equals users
+                    where users.Email == email
+                    select new
+                    {
+                        FirstName = users.FirstName,
+                        Lastname = users.LastName,
+                        BirthDate = users.BirthDate,
+                        Gender = users.Gender,
+                        Email = users.Email,
+                        JMBG = users.JMBG
+                    }).FirstOrDefaultAsync();
+        PatientGET patient = new()
+        {
+            FirstName = query.FirstName,
+            LastName = query.Lastname,
+            birthDate = query.BirthDate,
+            Gender = Convert.ToInt16(query.Gender),
+            Email = query.Email,
+            JMBG = query.JMBG
+        };
+        
+        
+        return patient;
     }
 }

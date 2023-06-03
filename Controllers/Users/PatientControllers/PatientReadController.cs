@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Models.DTO.UserDTO.Patient;
 
 namespace Controllers.Users.PatientControllers;
 public partial class PatientController : Controller
@@ -13,7 +14,11 @@ public partial class PatientController : Controller
     public async Task<IActionResult> ReadPatientAsync([FromHeader] string Authorization)
     {
         var patientEmail = this._iTokenService.GetEmailFromJWT(Authorization);
+        var patient = await _patientReadRepository.ReadPatientByEmail(patientEmail); 
+        
+        
 
-        return Ok(await _patientReadRepository.ReadPatientByEmail(patientEmail));
+
+        return Ok(this._mapper.Map<PatientGET>(patient));
     }
 }
