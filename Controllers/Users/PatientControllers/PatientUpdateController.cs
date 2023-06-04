@@ -13,15 +13,11 @@ public partial class PatientController : Controller
     [Authorize]
     public async Task<IActionResult> UpdatePatientAsync(PatientPATCH patientDTO, [FromHeader] string Authorization )
     {
-        Authorization = Authorization.Remove(0,7);
-        var handler = new JwtSecurityTokenHandler();
-        var jwtAuth = handler.ReadJwtToken(Authorization);
-        var tokenEmail = jwtAuth.Claims.First(c => c.Type == ClaimTypes.Email).Value;
-        var user = await _patientReadRepository.ReadPatientByEmail(tokenEmail);
-
+        var email = _iTokenService.GetEmailFromJWT(Authorization);
+        var patient = await _patientReadRepository.ReadPatientByEmail(email,"");
         
-        // patientDTO.PatientId = user.PatientId;
-        // patientDTO.Id = user.User.Id;
+        patientDTO.Id = patient.User.Id;
+        patientDTO.PatientId = patient.PatientId;
         var validationResult = await _patientValidations.ValidatePATCHRequest(patientDTO);
         if (validationResult.ResultOfValidations == true)
         {

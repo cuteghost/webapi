@@ -26,7 +26,7 @@ public class UserValidations : IUserValidations
     }
     public async Task<ValidationModel> ValidatePATCHRequest(UserPatch user)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id", "PatientId", "StaffId","BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate", "Telephone"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id", "PatientId", "StaffId","BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate", "Telephone","Address"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
         validationResult = await ValidateUniqueFields(user.Email, user.JMBG, user.Id);
         return validationResult;
