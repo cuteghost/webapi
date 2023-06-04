@@ -19,6 +19,7 @@ using Services.TokenHandlerService;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Services.HashService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,8 +71,11 @@ builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
 builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
 builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
-/*--------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------*/
 builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<IHashService, HashService>();
+/*-----------------------------------------------------------------------*/
 builder.Services.AddScoped<ILoginRepo, LoginRepo>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
