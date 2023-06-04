@@ -3,21 +3,25 @@ using System.Text;
 using Models.Domain;
 using Repository.Interfaces.Users.PatientsInterface;
 using server.Database;
+using Services.HashService;
 
 namespace Repository.Classes.Users.PatientsRepo;
 
 public class PatientsCreate : IPatientsCreate
 {
     private readonly DentalDBContext _dbContext;
-    public PatientsCreate(DentalDBContext dbContext)
+    private readonly IHashService _hasher;
+
+    public PatientsCreate(DentalDBContext dbContext, IHashService hasher)
     {
-        _dbContext = dbContext;
+        this._dbContext = dbContext;
+        this._hasher = hasher;
     }
     public async Task<long> CreatePatientAsync(User newUser, Patient newPatient)
     {
         try
         {
-            newUser.Password = HashPassword(newUser.Password);
+            newUser.Password = _hasher.Hash(newUser.Password);
             await _dbContext.Users.AddAsync(newUser);
             await _dbContext.SaveChangesAsync();
 
@@ -33,25 +37,5 @@ public class PatientsCreate : IPatientsCreate
 
             throw;
         }
-    }
-
-    public string HashPassword(string password)
-    {
-        StringBuilder Sb = new StringBuilder();
-
-
-        using (SHA256 hash = SHA256Managed.Create()) {
-
-            Encoding enc = Encoding.UTF8;
-
-            Byte[] result = hash.ComputeHash(enc.GetBytes(password));
-
-
-            foreach (Byte b in result)
-
-            Sb.Append(b.ToString("x2"));
-
-        }
-        return Sb.ToString();   
     }
 }

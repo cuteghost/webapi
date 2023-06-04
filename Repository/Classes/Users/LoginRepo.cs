@@ -5,20 +5,24 @@ using Models.DTO.AuthDTO;
 using Models.Domain;
 using System.Text;
 using System.Security.Cryptography;
+using Services.HashService;
 
 namespace Repository.Classes.Users;
 public class LoginRepo : ILoginRepo
 {
     private readonly DentalDBContext _dbContext;
-    public LoginRepo(DentalDBContext dbContext)
+    private readonly IHashService _hasher;
+
+    public LoginRepo(DentalDBContext dbContext, IHashService hasher)
     {
-        _dbContext = dbContext;
+        this._dbContext = dbContext;
+        this._hasher = hasher;
     }
     public async Task<User> Login(LoginDTO user)
     {
-        user.Password = HashPassword(user.Password);
+        user.Password = _hasher.Hash(user.Password);
         var _user = await _dbContext.Users.AsNoTracking().Where(s => s.Email == user.Email && s.Password == user.Password).FirstOrDefaultAsync();
-        if(_user != null)
+        if (_user != null)
         {
             user.FirstName = _user.FirstName;
             user.LastName = _user.LastName;
@@ -27,25 +31,4 @@ public class LoginRepo : ILoginRepo
 
         return null;
     }
-    public string HashPassword(string password)
-    {
-        StringBuilder Sb = new StringBuilder();
-
-
-        using (SHA256 hash = SHA256Managed.Create()) {
-
-            Encoding enc = Encoding.UTF8;
-
-            Byte[] result = hash.ComputeHash(enc.GetBytes(password));
-
-
-            foreach (Byte b in result)
-
-            Sb.Append(b.ToString("x2"));
-
-        }
-        return Sb.ToString();   
-    }
-
-    
 }
