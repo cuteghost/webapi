@@ -5,5 +5,6 @@ namespace Services.TokenHandlerService
     {
         public Task<string> CreateTokenAsync(LoginDTO user);
         public string GetEmailFromJWT(string token);
+        public Task<bool> IsStaff(string email);
     }
 }
