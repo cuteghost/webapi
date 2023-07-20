@@ -77,6 +77,8 @@ builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
 builder.Services.AddScoped<IHashService, HashService>();
 /*-----------------------------------------------------------------------*/
 builder.Services.AddScoped<ILoginRepo, LoginRepo>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<IChangePassword, ChangePasswordRepo>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

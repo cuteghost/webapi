@@ -18,10 +18,12 @@ public partial class PatientController : Controller
         
         patientDTO.Id = patient.User.Id;
         patientDTO.PatientId = patient.PatientId;
+        
         var validationResult = await _patientValidations.ValidatePATCHRequest(patientDTO);
         if (validationResult.ResultOfValidations == true)
         {
             var userDomain = _mapper.Map<User>(patientDTO);
+            userDomain.Password = patient.User.Password;
             var patientDomain = _mapper.Map<Patient>(patientDTO);
             await _patientUpdateRepository.UpdatePatientAsync(userDomain, patientDomain);
         }

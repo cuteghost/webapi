@@ -22,7 +22,6 @@ public class PatientsUpdate : IPatientsUpdate
     {
         try
         {
-            user.Password = _hasher.Hash(user.Password);
             patient.User = user;
             _dbContext.Update(patient);
             await _dbContext.SaveChangesAsync();
