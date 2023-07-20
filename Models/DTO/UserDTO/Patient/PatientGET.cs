@@ -2,4 +2,6 @@
 
 public class PatientGET : UserGet
 {
+    public string? Adress { get; set; }
+    public string? Telephone { get; set; }
 }

@@ -21,4 +21,6 @@ namespace Models.DTO.UserDTO;
         [MaxLength(16)]
         [MinLength(8)]
         public string Password { get; set; } = string.Empty;
+
+        public long UserId { get; set; }
     }

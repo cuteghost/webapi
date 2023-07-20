@@ -1,25 +1,28 @@
-﻿using Models.Domain;
+﻿using System.Security.Cryptography;
+using System.Text;
+using Models.Domain;
 using Repository.Interfaces.Users.PatientsInterface;
 using server.Database;
+using Services.HashService;
 
 namespace Repository.Classes.Users.PatientsRepo;
 
 public class PatientsUpdate : IPatientsUpdate
 {
     private readonly DentalDBContext _dbContext;
+    private readonly IHashService _hasher;
 
-    public PatientsUpdate(DentalDBContext dbContext)
+    public PatientsUpdate(DentalDBContext dbContext, IHashService hasher)
     {
-        _dbContext = dbContext;
+        this._dbContext = dbContext;
+        this._hasher = hasher;
     }
 
     public async Task<long> UpdatePatientAsync(User user, Models.Domain.Patient patient)
     {
         try
         {
-            _dbContext.Update(user);
-            await _dbContext.SaveChangesAsync();
-
+            patient.User = user;
             _dbContext.Update(patient);
             await _dbContext.SaveChangesAsync();
 

@@ -1,16 +1,25 @@
 using Repository.Classes.Users;
 using Repository.Classes.Users.PatientsRepo;
 using Repository.Classes.Users.StaffRepo;
+using Repository.Classes.InvoicesRepo;
 using Repository.Interfaces.Users;
 using Repository.Interfaces.Users.PatientsInterface;
 using Repository.Interfaces.Users.StaffInterfaces;
+using Repository.Interfaces.InvoicesInterfaces;
 using Validations.Classes.Users;
 using Validations.Common.Validations;
+using Validations.Classes.Invoices;
 using Validations.Interfaces.Users;
+using Validations.Interfaces.Invoices;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
 using Services.PropertyService;
 using Services.ResponseService;
+using Services.TokenHandlerService;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Services.HashService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +44,7 @@ builder.Services.AddDbContext<DentalDBContext>(options =>
         Console.WriteLine("ERROR: Unable to connect to SQL server(Main)");
     }
 });
+
 /* helpServices */
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IResponseService, ResponseService>();
@@ -55,9 +65,44 @@ builder.Services.AddScoped<IPatientValidations, PatientValidations>();
 builder.Services.AddScoped<IUserValidations, UserValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
 /*----------------------------------------------------------------------*/
+builder.Services.AddScoped<IInvoicesCreate, InvoicesCreate>();
+builder.Services.AddScoped<IInvoicesRead, InvoicesRead>();
+builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
+builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
+builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
+builder.Services.AddScoped<IValidationsService, ValidationsService>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<IHashService, HashService>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<ILoginRepo, LoginRepo>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<IChangePassword, ChangePasswordRepo>();
 
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    });
+    
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("FirstPolicy", builder => 
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+    });
+});
 
 var app = builder.Build();
 
@@ -73,7 +118,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.UseCors("FirstPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

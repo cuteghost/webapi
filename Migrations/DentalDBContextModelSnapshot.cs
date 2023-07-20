@@ -8,7 +8,7 @@ using server.Database;
 
 #nullable disable
 
-namespace DentalApp.Migrations
+namespace webapi.Migrations
 {
     [DbContext(typeof(DentalDBContext))]
     partial class DentalDBContextModelSnapshot : ModelSnapshot
@@ -49,6 +49,36 @@ namespace DentalApp.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("Models.Domain.Invoice", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AmountRefused")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<short>("IsPaid")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>
@@ -175,42 +205,12 @@ namespace DentalApp.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(16)
+                        .HasMaxLength(512)
                         .HasColumnType("nvarchar");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Invoice", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("AmountRefused")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar");
-
-                    b.Property<DateTime>("InvoiceDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<short>("IsPaid")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("Models.Domain.Blog", b =>

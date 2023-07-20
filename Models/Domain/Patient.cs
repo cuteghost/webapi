@@ -7,7 +7,7 @@ public class Patient
     [Key]
     [Column(TypeName ="bigint")]
     public long PatientId { get; set; }
-    public User User { get; set; } = new User();
+    public User User { get; set; }
     [Column(TypeName = "datetime")]
     public DateTime FirstVisitDate { get; set; } = DateTime.Today;
     [Column(TypeName = "datetime")]

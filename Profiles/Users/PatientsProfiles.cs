@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Models.Domain;
+using Models.DTO.AuthDTO;
 using Models.DTO.UserDTO.Patient;
 
 namespace Profiles.Users;
