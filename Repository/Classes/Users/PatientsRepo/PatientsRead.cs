@@ -19,18 +19,27 @@ public class PatientsRead : IPatientsRead
                     join users in _dbContext.Users on patients.User equals users
                     select new
                     {
+                        Email = users.Email,
                         FirstName = users.FirstName,
-                        Lastname = users.LastName
+                        Lastname = users.LastName,
+                        BirthDate = users.BirthDate,
+                        Telephone = patients.Telephone,
+                        Adress = patients.Adress
+
                     };
         List<PatientGET> patientsList = new();
         foreach (var row in query)
         {
-            PatientGET staffMember = new()
+            PatientGET patients = new()
             {
+                Email = row.Email,
                 FirstName = row.FirstName,
-                LastName = row.Lastname
+                LastName = row.Lastname,
+                birthDate = row.BirthDate,
+                Telephone = row.Telephone,
+                Adress = row.Adress
             };
-            patientsList.Add(staffMember);
+            patientsList.Add(patients);
         }
         return await Task.FromResult(patientsList);
     }

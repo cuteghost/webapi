@@ -1,6 +1,7 @@
 ﻿using Models.Domain;
 using Repository.Interfaces.Users.StaffInterfaces;
 using server.Database;
+using Services.HashService;
 
 namespace Repository.Classes.Users.StaffRepo;
 
@@ -8,14 +9,18 @@ namespace Repository.Classes.Users.StaffRepo;
 public class StaffCreate : IStaffCreate
 {
 	private readonly DentalDBContext _dbContext;
-	public StaffCreate(DentalDBContext dbContext)
+    private readonly IHashService _hasher;
+
+	public StaffCreate(DentalDBContext dbContext, IHashService hasher)
 	{
 		_dbContext = dbContext;
+		_hasher = hasher;
 	}
     public async Task<long> CreateStaffAsync(User newUser, Staff newStaff)
     {
 		try
 		{
+            newUser.Password = _hasher.Hash(newUser.Password);
 			await _dbContext.Users.AddAsync(newUser);
 			await _dbContext.SaveChangesAsync();
 			
