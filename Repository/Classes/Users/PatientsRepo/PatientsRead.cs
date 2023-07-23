@@ -19,6 +19,7 @@ public class PatientsRead : IPatientsRead
                     join users in _dbContext.Users on patients.User equals users
                     select new
                     {
+                        Id = patients.User.Id,
                         Email = users.Email,
                         FirstName = users.FirstName,
                         Lastname = users.LastName,
@@ -32,6 +33,7 @@ public class PatientsRead : IPatientsRead
         {
             PatientGET patients = new()
             {
+                Id = row.Id,
                 Email = row.Email,
                 FirstName = row.FirstName,
                 LastName = row.Lastname,
@@ -51,6 +53,7 @@ public class PatientsRead : IPatientsRead
                            where users.Email == email
                            select new
                            {
+                               Id = patients.User.Id,
                                FirstName = users.FirstName,
                                Lastname = users.LastName,
                                BirthDate = users.BirthDate,
@@ -62,6 +65,7 @@ public class PatientsRead : IPatientsRead
                            }).FirstOrDefaultAsync();
         PatientGET patient = new()
         {
+            Id = query.Id,
             FirstName = query.FirstName,
             LastName = query.Lastname,
             birthDate = query.BirthDate,
