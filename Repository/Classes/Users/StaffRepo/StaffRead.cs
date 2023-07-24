@@ -49,4 +49,38 @@ public class StaffRead : IStaffRead
                          ).ToListAsync();
         return staffMembers;
     }
+
+    public async Task<StaffGet> GetStaffByEmail(string email)
+    {
+         var query = await (from staff in _dbContext.Staff
+                           join users in _dbContext.Users on staff.User equals users
+                           where users.Email == email
+                           select new
+                           {
+                               Id = staff.User.Id,
+                               FirstName = users.FirstName,
+                               Lastname = users.LastName,
+                               BirthDate = users.BirthDate,
+                               Gender = users.Gender,
+                               Email = users.Email,
+                               JMBG = users.JMBG,
+                               Certification = staff.Certification,
+                               Education = staff.Education
+                           }).FirstOrDefaultAsync();
+        StaffGet staffMember = new()
+        {
+            Id = query.Id,
+            FirstName = query.FirstName,
+            LastName = query.Lastname,
+            birthDate = query.BirthDate,
+            Gender = Convert.ToInt16(query.Gender),
+            Email = query.Email,
+            JMBG = query.JMBG,
+            Certification = query.Certification,
+            Education = query.Education,
+
+        };
+
+        return staffMember;
+    }
 }
