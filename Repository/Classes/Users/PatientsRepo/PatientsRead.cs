@@ -13,7 +13,7 @@ public class PatientsRead : IPatientsRead
     {
         _dbContext = dbContext;
     }
-    public async Task<List<PatientGET>> ReadPatientAsync()
+    public async Task<List<PatientGET>> ReadPatientsAsync()
     {
         var query = from patients in _dbContext.Patients
                     join users in _dbContext.Users on patients.User equals users
@@ -79,7 +79,38 @@ public class PatientsRead : IPatientsRead
 
         return patient;
     }
+    public async Task<PatientGET> ReadPatientById(long patientId)
+    {
+        var query = await(from patients in _dbContext.Patients
+                          join users in _dbContext.Users on patients.User equals users
+                          where patients.PatientId == patientId
+                          select new
+                          {
+                              Id = patients.User.Id,
+                              FirstName = users.FirstName,
+                              Lastname = users.LastName,
+                              BirthDate = users.BirthDate,
+                              Gender = users.Gender,
+                              Email = users.Email,
+                              JMBG = users.JMBG,
+                              Adress = patients.Adress,
+                              Telephone = patients.Telephone
+                          }).FirstOrDefaultAsync();
+        PatientGET patient = new()
+        {
+            Id = query.Id,
+            FirstName = query.FirstName,
+            LastName = query.Lastname,
+            birthDate = query.BirthDate,
+            Gender = Convert.ToInt16(query.Gender),
+            Email = query.Email,
+            JMBG = query.JMBG,
+            Adress = query.Adress,
+            Telephone = query.Telephone
+        };
 
+        return patient;
+    }
     public async Task<Patient> ReadPatientByEmail(string email, string _)
     {
         return await _dbContext.Patients.Include(s => s.User).Where(u => u.User.Email == email).AsNoTracking().FirstOrDefaultAsync();

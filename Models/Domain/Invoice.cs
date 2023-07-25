@@ -23,4 +23,8 @@ public class Invoice
     [Column(TypeName ="decimal(18,2)")]
     public float AmountRefused {get;set;}   
 
+    public Staff? Staff { get; set; }
+    public Patient? Patient { get; set; }
+
+
 }
