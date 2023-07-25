@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Database;
 
@@ -11,9 +12,11 @@ using server.Database;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DentalDBContext))]
-    partial class DentalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230725191507_Staff-Education")]
+    partial class StaffEducation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,6 +209,11 @@ namespace webapi.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("StaffId"));
 
                     b.Property<string>("Certification")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<string>("Education")
                         .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar");

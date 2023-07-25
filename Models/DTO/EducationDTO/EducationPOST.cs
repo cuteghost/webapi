@@ -19,5 +19,5 @@ public class EducationPOST
     [Column(TypeName = "datetime")]
     public DateTime To { get; set; } = DateTime.Now;
     public Location? Location { get; set; }
-    public long StaffId { get; set; }
+    public Staff? Staff { get; set; }
 }

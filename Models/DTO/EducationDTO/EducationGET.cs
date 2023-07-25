@@ -11,5 +11,5 @@ public class EducationGet
     public DateTime From { get; set; } = DateTime.Now;
     public DateTime To { get; set; } = DateTime.Now;
     public Location? Location { get; set; }
-    public long StaffId { get; set; }
+    public Staff? Staff { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Database;
 
@@ -11,9 +12,11 @@ using server.Database;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DentalDBContext))]
-    partial class DentalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230725190815_staff connected to education")]
+    partial class staffconnectedtoeducation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,9 +73,6 @@ namespace webapi.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("StaffId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -84,8 +84,6 @@ namespace webapi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("StaffId");
 
                     b.ToTable("Educations");
                 });
@@ -210,6 +208,9 @@ namespace webapi.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar");
 
+                    b.Property<long>("EducationId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("Joined")
                         .HasColumnType("datetime");
 
@@ -222,6 +223,8 @@ namespace webapi.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("StaffId");
+
+                    b.HasIndex("EducationId");
 
                     b.HasIndex("UserId");
 
@@ -289,13 +292,7 @@ namespace webapi.Migrations
                         .WithMany()
                         .HasForeignKey("LocationId");
 
-                    b.HasOne("Models.Domain.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("StaffId");
-
                     b.Navigation("Location");
-
-                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>
@@ -311,11 +308,19 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("Models.Domain.Staff", b =>
                 {
+                    b.HasOne("Models.Domain.Education", "Education")
+                        .WithMany()
+                        .HasForeignKey("EducationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Models.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Education");
 
                     b.Navigation("User");
                 });

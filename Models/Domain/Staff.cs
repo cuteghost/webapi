@@ -15,9 +15,7 @@ public class Staff
     [MaxLength(4000)]
     [Column(TypeName = "nvarchar")]
     public string Certification { get; set; } = string.Empty;
-    [Column(TypeName = "nvarchar")]
-    [MaxLength(4000)]
-    public string Education { get; set; } = string.Empty;
+
     [Column(TypeName = "nvarchar")]
     [MaxLength(4000)]
     public string Languages { get; set; } = string.Empty;

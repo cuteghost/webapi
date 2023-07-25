@@ -11,9 +11,6 @@ namespace Models.DTO.UserDTO.Staff
         public string Certification { get; set; } = string.Empty;
         [MaxLength(4000)]
         [MinLength(3)]
-        public string Education { get; set; } = string.Empty;
-        [MaxLength(4000)]
-        [MinLength(3)]
         public string Languages { get; set; } = string.Empty;
     }
 }
