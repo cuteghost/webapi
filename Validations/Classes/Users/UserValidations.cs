@@ -1,4 +1,4 @@
-﻿using Models.Domain;
+﻿﻿using Models.Domain;
 using Models.DTO.UserDTO;
 using Repository.Interfaces.Users;
 using Repository.Interfaces.Users.StaffInterfaces;
@@ -19,16 +19,16 @@ public class UserValidations : IUserValidations
     }
     public async Task<ValidationModel> ValidatePOSTRequest(UserPost newUser)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(newUser,new string[] {"BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(newUser,new string[] {"UserId","BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
-        validationResult = await ValidateUniqueFields(newUser.JMBG,0);
+        validationResult = await ValidateUniqueFields(newUser.Email, newUser.JMBG, 0);
         return validationResult;
     }
     public async Task<ValidationModel> ValidatePATCHRequest(UserPatch user)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id","StaffId","BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id", "PatientId", "StaffId","BirthDate","Gender","Joined","Email","FirstVisitDate","LastVisitDate","LastPaymentDate", "Telephone","Address"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
-        validationResult = await ValidateUniqueFields(user.JMBG,user.Id);
+        validationResult = await ValidateUniqueFields(user.Email, user.JMBG, user.Id);
         return validationResult;
     }
     public async Task<ValidationModel> ValidateDELETERequest(long adminId, long UserId)
@@ -50,9 +50,9 @@ public class UserValidations : IUserValidations
     }
     public async Task<ValidationModel> ValidatePOSTAndPATCHRequest(User user)
     {
-        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id"},("",""));
+        var validationResult = _validationsService.ValidateFieldsLength(user,new string[] {"Id", "PatientId"},("",""));
         if(!validationResult.ResultOfValidations) return validationResult;
-        validationResult = await ValidateUniqueFields(user.JMBG,0);
+        validationResult = await ValidateUniqueFields(user.Email,user.JMBG,0);
         return validationResult;
     }
     /*
@@ -64,7 +64,7 @@ public class UserValidations : IUserValidations
         --PUT/PATCH:
             In this types of request there is valid Id but the method GetUserByJMBG must return that Id :D 
     */
-    public async Task<ValidationModel> ValidateUniqueFields(string jmbg, long UserId = 0)
+    public async Task<ValidationModel> ValidateUniqueFields(string email, string jmbg, long UserId = 0)
     {
         if(!await ValidateJMBGUnique(jmbg,UserId)){
             return new ValidationModel{
@@ -73,9 +73,9 @@ public class UserValidations : IUserValidations
                 ResultOfValidations = false
             };
         }
-        if(!await ValidateEmailUnique(jmbg,UserId)){
+        if(!await ValidateEmailUnique(email,UserId)){
             return new ValidationModel{
-                ValidationMessage="User with parsed JMBG already exists in the database.",
+                ValidationMessage="User with Email already exists in the database.",
                 StatusCode = 400,
                 ResultOfValidations = false
             };
@@ -88,14 +88,14 @@ public class UserValidations : IUserValidations
     }
     public async Task<bool> ValidateJMBGUnique(string jmbg, long UserId)
     {
-        
-        if (await _usersReadRepository.GetUserByJMBG(jmbg) != UserId) { return false; }
+        var id = await _usersReadRepository.GetUserByJMBG(jmbg);
+        if (id != UserId && id != 0) { return false; }
         return true;
     }
     public async Task<bool> ValidateEmailUnique(string email, long UserId)
     {
-        
-        if(await _usersReadRepository.GetUserByEmail(email) != 0) { return false; }
+        var id = await _usersReadRepository.GetUserByEmail(email);
+        if(id != UserId && id != 0) { return false; }
         return true;
     }
 }

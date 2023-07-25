@@ -1,22 +1,37 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using server.Database;
+using System.Text;
+
 using Repository.Classes.Users;
 using Repository.Classes.Users.PatientsRepo;
 using Repository.Classes.Users.StaffRepo;
 using Repository.Classes.InvoicesRepo;
+using Repository.Classes.LocationsRepo;
+using Repository.Classes.EducationsRepo;
+
 using Repository.Interfaces.Users;
 using Repository.Interfaces.Users.PatientsInterface;
 using Repository.Interfaces.Users.StaffInterfaces;
 using Repository.Interfaces.InvoicesInterfaces;
+using Repository.Interfaces.LocationInterfaces;
+using Repository.Interfaces.EducationInterfaces;
+
 using Validations.Classes.Users;
 using Validations.Common.Validations;
 using Validations.Classes.Invoices;
 using Validations.Interfaces.Users;
 using Validations.Interfaces.Invoices;
-using Microsoft.EntityFrameworkCore;
-using server.Database;
+
 using Services.PropertyService;
 using Services.ResponseService;
+
 using Repository.Interfaces.TreatmentInterfaces;
 using Repository.Classes.TreatmentsRepo;
+using Services.TokenHandlerService;
+using Services.HashService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +56,7 @@ builder.Services.AddDbContext<DentalDBContext>(options =>
         Console.WriteLine("ERROR: Unable to connect to SQL server(Main)");
     }
 });
+
 /* helpServices */
 builder.Services.AddScoped<IPropertyService, PropertyService>();
 builder.Services.AddScoped<IResponseService, ResponseService>();
@@ -67,14 +83,55 @@ builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
 builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
 builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
+
 /**************************************************************************/
 builder.Services.AddScoped<ITreatmentsCreate, TreatmentsCreate>();
 builder.Services.AddScoped<ITreatmentsRead, TreatmentsRead>();
 builder.Services.AddScoped<ITreatmentsUpdate, TreatmentsUpdate>();
 builder.Services.AddScoped<ITreatmentsDelete, TreatmentsDelete>();
 
+/*----------------------------------------------------------------------*/
+builder.Services.AddScoped<ILocationCreate, LocationCreate>();
+builder.Services.AddScoped<ILocationRead, LocationRead>();
+builder.Services.AddScoped<ILocationPatch, LocationPatch>();
+builder.Services.AddScoped<ILocationDelete, LocationDelete>();
+/*----------------------------------------------------------------------*/
+builder.Services.AddScoped<IEducationsCreate, EducationsCreate>();
+builder.Services.AddScoped<IEducationsRead, EducationsRead>();
+builder.Services.AddScoped<IEducationsUpdate, EducationsUpdate>();
+builder.Services.AddScoped<IEducationsDelete, EducationsDelete>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<IHashService, HashService>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<ILoginRepo, LoginRepo>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<IChangePassword, ChangePasswordRepo>();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    });
+    
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("FirstPolicy", builder => 
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+
+    });
+});
 
 var app = builder.Build();
 
@@ -90,7 +147,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.UseCors("FirstPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

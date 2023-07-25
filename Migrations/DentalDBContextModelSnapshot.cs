@@ -8,7 +8,8 @@ using server.Database;
 
 #nullable disable
 
-namespace DentalApp.Migrations
+namespace webapi.Migrations
+
 {
     [DbContext(typeof(DentalDBContext))]
     partial class DentalDBContextModelSnapshot : ModelSnapshot
@@ -51,6 +52,46 @@ namespace DentalApp.Migrations
                     b.ToTable("Blogs");
                 });
 
+
+            modelBuilder.Entity("Models.Domain.Education", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("From")
+                        .HasColumnType("datetime");
+
+                    b.Property<long?>("LocationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("School")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("StaffId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("To")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("Educations");
+                });
+
             modelBuilder.Entity("Models.Domain.Invoice", b =>
                 {
                     b.Property<long>("Id")
@@ -79,6 +120,32 @@ namespace DentalApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Invoices");
+                });
+
+
+            modelBuilder.Entity("Models.Domain.Location", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>
@@ -146,10 +213,6 @@ namespace DentalApp.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar");
 
-                    b.Property<string>("Education")
-                        .IsRequired()
-                        .HasMaxLength(4000)
-                        .HasColumnType("nvarchar");
 
                     b.Property<DateTime>("Joined")
                         .HasColumnType("datetime");
@@ -169,29 +232,6 @@ namespace DentalApp.Migrations
                     b.ToTable("Staff");
                 });
 
-            modelBuilder.Entity("Models.Domain.Treatment", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Diagnosis")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("DiagnosisCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime>("TreatmentDate")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Treatments");
-                });
 
             modelBuilder.Entity("Models.Domain.User", b =>
                 {
@@ -229,7 +269,9 @@ namespace DentalApp.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(16)
+
+                        .HasMaxLength(512)
+
                         .HasColumnType("nvarchar");
 
                     b.HasKey("Id");
@@ -246,6 +288,22 @@ namespace DentalApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
+                });
+
+
+            modelBuilder.Entity("Models.Domain.Education", b =>
+                {
+                    b.HasOne("Models.Domain.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
+                    b.HasOne("Models.Domain.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>
