@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Models.DTO.EducationDTO;
-using webapi.Models.Domain;
 
 namespace Controllers.Users.EducationControllers;
 
 public partial class EducationController : Controller
 {
     [HttpPatch]
-    [Authorize]
+    // [Authorize]
     [Route("update/{educationId}/{creatorId}")]
     public async Task<IActionResult> UpdateEducationAsync(long educationId, long creatorId, EducationPatch blogDTO)
     {

@@ -1,4 +1,4 @@
-﻿using webapi.Models.Domain;
+﻿using Models.Domain;
 
 namespace Repository.Interfaces.EducationInterfaces;
 

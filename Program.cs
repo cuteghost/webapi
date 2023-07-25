@@ -1,24 +1,32 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using server.Database;
+using System.Text;
+
 using Repository.Classes.Users;
 using Repository.Classes.Users.PatientsRepo;
 using Repository.Classes.Users.StaffRepo;
 using Repository.Classes.InvoicesRepo;
+using Repository.Classes.LocationsRepo;
+using Repository.Classes.EducationsRepo;
+
 using Repository.Interfaces.Users;
 using Repository.Interfaces.Users.PatientsInterface;
 using Repository.Interfaces.Users.StaffInterfaces;
 using Repository.Interfaces.InvoicesInterfaces;
+using Repository.Interfaces.LocationInterfaces;
+using Repository.Interfaces.EducationInterfaces;
+
 using Validations.Classes.Users;
 using Validations.Common.Validations;
 using Validations.Classes.Invoices;
 using Validations.Interfaces.Users;
 using Validations.Interfaces.Invoices;
-using Microsoft.EntityFrameworkCore;
-using server.Database;
+
 using Services.PropertyService;
 using Services.ResponseService;
 using Services.TokenHandlerService;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Services.HashService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -71,6 +79,16 @@ builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
 builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
 builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
+/*----------------------------------------------------------------------*/
+builder.Services.AddScoped<ILocationCreate, LocationCreate>();
+builder.Services.AddScoped<ILocationRead, LocationRead>();
+builder.Services.AddScoped<ILocationPatch, LocationPatch>();
+builder.Services.AddScoped<ILocationDelete, LocationDelete>();
+/*----------------------------------------------------------------------*/
+builder.Services.AddScoped<IEducationsCreate, EducationsCreate>();
+builder.Services.AddScoped<IEducationsRead, EducationsRead>();
+builder.Services.AddScoped<IEducationsUpdate, EducationsUpdate>();
+builder.Services.AddScoped<IEducationsDelete, EducationsDelete>();
 /*-----------------------------------------------------------------------*/
 builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
 /*-----------------------------------------------------------------------*/

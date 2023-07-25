@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Database;
 
@@ -11,9 +12,11 @@ using server.Database;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DentalDBContext))]
-    partial class DentalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230724210438_Location")]
+    partial class Location
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,43 +52,6 @@ namespace webapi.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Blogs");
-                });
-
-            modelBuilder.Entity("Models.Domain.Education", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime");
-
-                    b.Property<long?>("LocationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("School")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long>("StaffId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
-
-                    b.ToTable("Educations");
                 });
 
             modelBuilder.Entity("Models.Domain.Invoice", b =>
@@ -284,15 +250,6 @@ namespace webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
-                });
-
-            modelBuilder.Entity("Models.Domain.Education", b =>
-                {
-                    b.HasOne("Models.Domain.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>

@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Models.DTO.EducationDTO;
-using webapi.Models.Domain;
 
 namespace Controllers.Users.EducationControllers;
 
 public partial class EducationController : Controller
 {
     [HttpPost]
-    [Authorize]
+    // [Authorize]
     [Route("create")]
     public async Task<IActionResult> CreateEducationAsync(EducationPOST newEducationDTO)
     {

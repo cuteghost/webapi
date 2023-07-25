@@ -1,6 +1,6 @@
 ﻿using Repository.Interfaces.EducationInterfaces;
 using server.Database;
-using webapi.Models.Domain;
+using Models.Domain;
 
 namespace Repository.Classes.EducationsRepo;
 public class EducationsCreate : IEducationsCreate

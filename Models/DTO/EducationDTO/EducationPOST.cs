@@ -2,7 +2,7 @@
 using Models.Domain;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using Models.DTO.LocationDTO;
 namespace Models.DTO.EducationDTO;
 public class EducationPOST
 {

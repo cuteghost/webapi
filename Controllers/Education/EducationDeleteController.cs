@@ -7,7 +7,7 @@ namespace Controllers.Users.EducationControllers;
 public partial class EducationController : Controller
 {
     [HttpDelete]
-    [Authorize]
+    // [Authorize]
     [Route("delete/{educationId}/{creatorId}")]
     public async Task<IActionResult> DeleteAsync(long educationId, long creatorId)
     {

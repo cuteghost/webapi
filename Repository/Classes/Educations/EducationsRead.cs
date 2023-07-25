@@ -1,7 +1,7 @@
 ﻿using Repository.Interfaces.EducationInterfaces;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
-using webapi.Models.Domain;
+using Models.Domain;
 
 namespace Repository.Classes.EducationsRepo;
 public class EducationsRead : IEducationsRead

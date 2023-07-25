@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace webapi.Models.Domain;
+namespace Models.Domain;
 public class Education
 {
     [Key]
