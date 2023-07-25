@@ -19,6 +19,7 @@ public class InvoicePOST
     [Required]
     [Column(TypeName ="decimal(18,2)")]
     public float AmountRefused {get;set;}
+
     
     //Ovdje ide long a ne Staff ili Patient tip objekta
     //zato sto ce se Domeni prosljedjivati staff koji se dobije

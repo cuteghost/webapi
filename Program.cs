@@ -26,8 +26,12 @@ using Validations.Interfaces.Invoices;
 
 using Services.PropertyService;
 using Services.ResponseService;
+
+using Repository.Interfaces.TreatmentInterfaces;
+using Repository.Classes.TreatmentsRepo;
 using Services.TokenHandlerService;
 using Services.HashService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -79,6 +83,13 @@ builder.Services.AddScoped<IInvoicesUpdate, InvoicesUpdate>();
 builder.Services.AddScoped<IInvoicesDelete, InvoicesDelete>();
 builder.Services.AddScoped<IInvoiceValidations, InvoiceValidations>();
 builder.Services.AddScoped<IValidationsService, ValidationsService>();
+
+/**************************************************************************/
+builder.Services.AddScoped<ITreatmentsCreate, TreatmentsCreate>();
+builder.Services.AddScoped<ITreatmentsRead, TreatmentsRead>();
+builder.Services.AddScoped<ITreatmentsUpdate, TreatmentsUpdate>();
+builder.Services.AddScoped<ITreatmentsDelete, TreatmentsDelete>();
+
 /*----------------------------------------------------------------------*/
 builder.Services.AddScoped<ILocationCreate, LocationCreate>();
 builder.Services.AddScoped<ILocationRead, LocationRead>();
