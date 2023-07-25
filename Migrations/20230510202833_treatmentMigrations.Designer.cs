@@ -3,18 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using server.Database;
 
 #nullable disable
 
 namespace webapi.Migrations
-
 {
     [DbContext(typeof(DentalDBContext))]
-    partial class DentalDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230510202833_treatmentMigrations")]
+    partial class treatmentMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,46 +54,6 @@ namespace webapi.Migrations
                     b.ToTable("Blogs");
                 });
 
-
-            modelBuilder.Entity("Models.Domain.Education", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("From")
-                        .HasColumnType("datetime");
-
-                    b.Property<long?>("LocationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("School")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<long?>("StaffId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("To")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LocationId");
-
-                    b.HasIndex("StaffId");
-
-                    b.ToTable("Educations");
-                });
-
             modelBuilder.Entity("Models.Domain.Invoice", b =>
                 {
                     b.Property<long>("Id")
@@ -117,45 +79,9 @@ namespace webapi.Migrations
                     b.Property<short>("IsPaid")
                         .HasColumnType("smallint");
 
-                    b.Property<long?>("PatientId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("StaffId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("StaffId");
 
                     b.ToTable("Invoices");
-                });
-
-
-            modelBuilder.Entity("Models.Domain.Location", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>
@@ -223,6 +149,10 @@ namespace webapi.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar");
 
+                    b.Property<string>("Education")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar");
 
                     b.Property<DateTime>("Joined")
                         .HasColumnType("datetime");
@@ -242,6 +172,29 @@ namespace webapi.Migrations
                     b.ToTable("Staff");
                 });
 
+            modelBuilder.Entity("Models.Domain.Treatment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Diagnosis")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("DiagnosisCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("TreatmentDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Treatments");
+                });
 
             modelBuilder.Entity("Models.Domain.User", b =>
                 {
@@ -279,9 +232,7 @@ namespace webapi.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-
-                        .HasMaxLength(512)
-
+                        .HasMaxLength(16)
                         .HasColumnType("nvarchar");
 
                     b.HasKey("Id");
@@ -298,37 +249,6 @@ namespace webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
-                });
-
-
-            modelBuilder.Entity("Models.Domain.Education", b =>
-                {
-                    b.HasOne("Models.Domain.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId");
-
-                    b.HasOne("Models.Domain.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("StaffId");
-
-                    b.Navigation("Location");
-
-                    b.Navigation("Staff");
-                });
-
-            modelBuilder.Entity("Models.Domain.Invoice", b =>
-                {
-                    b.HasOne("Models.Domain.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.HasOne("Models.Domain.Staff", "Staff")
-                        .WithMany()
-                        .HasForeignKey("StaffId");
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>
