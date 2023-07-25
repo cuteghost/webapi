@@ -5,8 +5,9 @@ namespace Repository.Interfaces.Users.PatientsInterface;
 
 public interface IPatientsRead
 {
-    public Task<List<PatientGET>> ReadPatientAsync();
+    public Task<List<PatientGET>> ReadPatientsAsync();
     public Task<PatientGET> ReadPatientByEmail(string email);
+    public Task<PatientGET> ReadPatientById(long patientId);
     public Task<Patient> ReadPatientByEmail(string email, string _="");
 
 }

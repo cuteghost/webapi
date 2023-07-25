@@ -10,7 +10,7 @@ public partial class PatientController : Controller
     {
         var userEmail = _iTokenService.GetEmailFromJWT(Authorization);
         if(await _iTokenService.IsStaff(userEmail)==true)
-            return Ok(await _patientReadRepository.ReadPatientAsync());
+            return Ok(await _patientReadRepository.ReadPatientsAsync());
         else
             return Unauthorized();
     }
