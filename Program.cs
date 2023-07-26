@@ -10,6 +10,7 @@ using Repository.Classes.Users.StaffRepo;
 using Repository.Classes.InvoicesRepo;
 using Repository.Classes.LocationsRepo;
 using Repository.Classes.EducationsRepo;
+using Repository.Classes.ExperiencesRepo;
 
 using Repository.Interfaces.Users;
 using Repository.Interfaces.Users.PatientsInterface;
@@ -17,6 +18,7 @@ using Repository.Interfaces.Users.StaffInterfaces;
 using Repository.Interfaces.InvoicesInterfaces;
 using Repository.Interfaces.LocationInterfaces;
 using Repository.Interfaces.EducationInterfaces;
+using Repository.Interfaces.ExperienceInterfaces;
 
 using Validations.Classes.Users;
 using Validations.Common.Validations;
@@ -100,6 +102,11 @@ builder.Services.AddScoped<IEducationsCreate, EducationsCreate>();
 builder.Services.AddScoped<IEducationsRead, EducationsRead>();
 builder.Services.AddScoped<IEducationsUpdate, EducationsUpdate>();
 builder.Services.AddScoped<IEducationsDelete, EducationsDelete>();
+/*----------------------------------------------------------------------*/
+builder.Services.AddScoped<IExperiencesCreate, ExperiencesCreate>();
+builder.Services.AddScoped<IExperiencesRead, ExperiencesRead>();
+builder.Services.AddScoped<IExperiencesUpdate, ExperiencesUpdate>();
+builder.Services.AddScoped<IExperiencesDelete, ExperiencesDelete>();
 /*-----------------------------------------------------------------------*/
 builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
 /*-----------------------------------------------------------------------*/

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Models.Domain
 {
-    public class Treatment
+    public class Material
     {
         [Key]
         [Column(TypeName = "bigint")]
@@ -11,7 +11,7 @@ namespace Models.Domain
         
         [Required]
         [Column(TypeName = "nvarchar(100)")]
-        public string Diagnosis { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         [Required]
         [Column(TypeName = "nvarchar(100)")]

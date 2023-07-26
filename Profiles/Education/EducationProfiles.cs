@@ -1,6 +1,6 @@
 ﻿using Models.DTO.EducationDTO;
 
-namespace webapi.Profiles.Education;
+namespace Profiles.Education;
 public class EducationProfiles : AutoMapper.Profile
 {
     public EducationProfiles()

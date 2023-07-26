@@ -28,7 +28,6 @@ public class StaffRead : IStaffRead
                             LastName = staff.User.LastName,
                             // Education = staff.Education,
                             Languages = staff.Languages,
-                            Certification = staff.Certification
                         }).FirstOrDefaultAsync();
         if(staffMember == null)
         {
@@ -42,9 +41,9 @@ public class StaffRead : IStaffRead
                          select new StaffGet{
                             FirstName = staff.User.FirstName,
                             LastName = staff.User.LastName,
+                            Email = staff.User.Email,
                             // Education = staff.Education,
                             Languages = staff.Languages,
-                            Certification = staff.Certification
                          }
                          ).ToListAsync();
         return staffMembers;
@@ -64,7 +63,6 @@ public class StaffRead : IStaffRead
                                Gender = users.Gender,
                                Email = users.Email,
                                JMBG = users.JMBG,
-                               Certification = staff.Certification,
                             //    Education = staff.Education
                            }).FirstOrDefaultAsync();
         StaffGet staffMember = new()
@@ -76,7 +74,6 @@ public class StaffRead : IStaffRead
             Gender = Convert.ToInt16(query.Gender),
             Email = query.Email,
             JMBG = query.JMBG,
-            Certification = query.Certification,
             // Education = query.Education,
 
         };
