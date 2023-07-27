@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using server.Database;
 using Models.DTO.UserDTO.Staff;
+using Models.Domain;
 
 namespace Repository.Classes.Users.StaffRepo;
 
@@ -34,6 +35,10 @@ public class StaffRead : IStaffRead
             return new StaffGet();
         }
         return staffMember;
+    }
+    public async Task<Staff> GetStaffObjectMember(long staffId)
+    {
+        return await _dbContext.Staff.Include(s => s.User).AsNoTracking().FirstOrDefaultAsync(s => s.StaffId == staffId);
     }
     public async Task<List<StaffGet>> GetStaffTeam()
     {

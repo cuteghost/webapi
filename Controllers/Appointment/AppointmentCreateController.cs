@@ -12,12 +12,13 @@ namespace Controllers.AppointmentControllers
         {
             var newAppointment = _mapper.Map<Appointment>(appointmentPost);
 
-            var patient = await _patientRead.ReadPatientById(appointmentPost.PatientId);
-            var staff = await _staffRead.GetStaffMember(appointmentPost.StaffId);
+            var patient = await _patientRead.ReadPatientObjectById(appointmentPost.PatientId);
+            var staff = await _staffRead.GetStaffObjectMember(appointmentPost.StaffId);
 
-            newAppointment.Patient = _mapper.Map<Patient>(patient);
-            newAppointment.Staff = _mapper.Map<Staff>(staff);
-            
+            newAppointment.Patient = patient;
+            newAppointment.Staff = staff;
+
+
             await _appointmentCreate.CreateAppointment(newAppointment);
             return Ok("Done");
         }

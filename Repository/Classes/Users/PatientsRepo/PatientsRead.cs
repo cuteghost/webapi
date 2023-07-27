@@ -111,6 +111,10 @@ public class PatientsRead : IPatientsRead
 
         return patient;
     }
+    public async Task<Patient> ReadPatientObjectById(long patientId)
+    {
+        return await _dbContext.Patients.Include(s=>s.User).AsNoTracking().FirstOrDefaultAsync(s=> s.PatientId == patientId);
+    }
     public async Task<Patient> ReadPatientByEmail(string email, string _)
     {
         return await _dbContext.Patients.Include(s => s.User).Where(u => u.User.Email == email).AsNoTracking().FirstOrDefaultAsync();
