@@ -14,12 +14,12 @@ public class LocationDelete : ILocationDelete
         _dbContext = dbContext;
     }
 
-    public async Task<long> DeleteLocation(long locationId)
+    public async Task<long> DeleteLocation(long Id)
     {
-        var location = await _dbContext.Locations.FirstAsync(s => s.Id == locationId);
+        var location = await _dbContext.Locations.FirstAsync(s => s.Id == Id);
         _dbContext.Remove(location);
 
         await _dbContext.SaveChangesAsync();
-        return locationId;
+        return Id;
     }
 }

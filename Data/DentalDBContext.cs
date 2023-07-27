@@ -17,5 +17,12 @@ public class DentalDBContext : DbContext
     public DbSet<Location> Locations { get; set; }
     public DbSet<Education> Educations{ get; set; }
     public DbSet<Experience> Experiences { get; set; }
+    public DbSet<Material> Materials { get; set; }
+    public DbSet<TreatmentItems> TreatmentItems { get; set; }
+    public DbSet<Country> Countries { get; set; }
+    public DbSet<City> Cities { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    
+
 
 }

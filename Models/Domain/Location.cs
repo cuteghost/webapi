@@ -9,11 +9,6 @@ public class Location
     [Column(TypeName = "bigint")]
     public long Id { get; set; }
     [Required]
-    public string Country { get; set; } = string.Empty;
-    [Required]
-    [Column(TypeName = "nvarchar(50)")]
-    public string City { get; set; } = string.Empty;
-    [Column(TypeName = "nvarchar(max)")]
-    [Required]
     public string Address { get; set; } = string.Empty;
+    public City? City { get; set; }
 }

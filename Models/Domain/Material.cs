@@ -7,20 +7,13 @@ namespace Models.Domain
     {
         [Key]
         [Column(TypeName = "bigint")]
-        public long Id { get; set; }
-        
+        public long Id { get; set; }    
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string Name { get; set; } = string.Empty;
-
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string DiagnosisCode { get; set; } = string.Empty;
-        
-        [Column(TypeName = "datetime")]
-        public DateTime TreatmentDate { get; set; } = DateTime.Now;
+        [Column(TypeName = "bigint")]
+        public long StockAmount { get; set; } 
 
-        public Staff? Staff { get; set; }
-        public Patient? Patient { get; set; }
     }
 }

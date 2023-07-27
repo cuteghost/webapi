@@ -1,8 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces.TreatmentInterfaces;
-using Repository.Interfaces.Users.PatientsInterface;
-using Repository.Interfaces.Users.StaffInterfaces;
+using Repository.Interfaces.AppointmentInterfaces;
 using Services.ResponseService;
 
 namespace Controllers.TreatmentControllers
@@ -17,9 +16,7 @@ namespace Controllers.TreatmentControllers
         private readonly ITreatmentsDelete _treatmentsDelete;
         private readonly ITreatmentsUpdate _treatmentsUpdate;
         private readonly IResponseService _responseService;
-
-        private readonly IStaffRead _staffRead;
-        private readonly IPatientsRead _patientRead;
+        private readonly IAppointmentsRead _appointmentRead;
 
         public TreatmentController
         (
@@ -29,8 +26,7 @@ namespace Controllers.TreatmentControllers
             ITreatmentsDelete treatmentsDelete,
             ITreatmentsUpdate treatmentsUpdate,
             IResponseService responseService,
-            IStaffRead staffRead,
-            IPatientsRead patientRead
+            IAppointmentsRead appointmentsRead
         )
         {
             _mapper = mapper;
@@ -39,8 +35,7 @@ namespace Controllers.TreatmentControllers
             _treatmentsDelete = treatmentsDelete;
             _treatmentsUpdate = treatmentsUpdate;
             _responseService = responseService;
-            _staffRead = staffRead;
-            _patientRead = patientRead;
+            _appointmentRead = appointmentsRead;
         }
     }
 }

@@ -19,8 +19,8 @@ namespace Models.Domain
         
         [Column(TypeName = "datetime")]
         public DateTime TreatmentDate { get; set; } = DateTime.Now;
+        [Required]
+        public Appointment Appointment { get; set; }
 
-        public Staff? Staff { get; set; }
-        public Patient? Patient { get; set; }
     }
 }

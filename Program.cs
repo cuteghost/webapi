@@ -11,6 +11,11 @@ using Repository.Classes.InvoicesRepo;
 using Repository.Classes.LocationsRepo;
 using Repository.Classes.EducationsRepo;
 using Repository.Classes.ExperiencesRepo;
+using Repository.Classes.MaterialsRepo;
+using Repository.Classes.TreatmentItemsRepo;
+using Repository.Classes.CountriesRepo;
+using Repository.Classes.CitiesRepo;
+using Repository.Classes.AppointmentsRepo;
 
 using Repository.Interfaces.Users;
 using Repository.Interfaces.Users.PatientsInterface;
@@ -19,6 +24,11 @@ using Repository.Interfaces.InvoicesInterfaces;
 using Repository.Interfaces.LocationInterfaces;
 using Repository.Interfaces.EducationInterfaces;
 using Repository.Interfaces.ExperienceInterfaces;
+using Repository.Interfaces.MaterialInterfaces;
+using Repository.Classes.TreatmentItemsInterfaces;
+using Repository.Interfaces.CityInterfaces;
+using Repository.Interfaces.CountryInterfaces;
+using Repository.Interfaces.AppointmentInterfaces;
 
 using Validations.Classes.Users;
 using Validations.Common.Validations;
@@ -65,6 +75,11 @@ builder.Services.AddScoped<IResponseService, ResponseService>();
 /* USERS */
 builder.Services.AddScoped<IUsersRead, UsersRead>();
 
+builder.Services.AddScoped<IAppointmentsCreate, AppointmentsCreate>();
+builder.Services.AddScoped<IAppointmentsRead, AppointmentsRead>();
+builder.Services.AddScoped<IAppointmentsUpdate, AppointmentsUpdate>();
+builder.Services.AddScoped<IAppointmentsDelete, AppointmentsDelete>();
+/*-----------------------------------------------------------------------*/
 builder.Services.AddScoped<IStaffCreate, StaffCreate>();
 builder.Services.AddScoped<IStaffUpdate, StaffUpdate>();
 builder.Services.AddScoped<IStaffRead, StaffRead>();
@@ -107,6 +122,26 @@ builder.Services.AddScoped<IExperiencesCreate, ExperiencesCreate>();
 builder.Services.AddScoped<IExperiencesRead, ExperiencesRead>();
 builder.Services.AddScoped<IExperiencesUpdate, ExperiencesUpdate>();
 builder.Services.AddScoped<IExperiencesDelete, ExperiencesDelete>();
+/*----------------------------------------------------------------------*/
+builder.Services.AddScoped<IMaterialsCreate, MaterialsCreate>();
+builder.Services.AddScoped<IMaterialsRead, MaterialsRead>();
+builder.Services.AddScoped<IMaterialsUpdate, MaterialsUpdate>();
+builder.Services.AddScoped<IMaterialsDelete, MaterialsDelete>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<ITreatmentItemsCreate, TreatmentItemsCreate>();
+// builder.Services.AddScoped<ITreatmentItemsRead, TreatmentItemsRead>();
+// builder.Services.AddScoped<ITreatmentItemsUpdate, TreatmentItemsUpdate>();
+// builder.Services.AddScoped<ITreatmentItemsDelete, TreatmentItemsDelete>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<ICityCreate, CityCreate>();
+builder.Services.AddScoped<ICityRead, CityRead>();
+builder.Services.AddScoped<ICityPatch, CityPatch>();
+builder.Services.AddScoped<ICityDelete, CityDelete>();
+/*-----------------------------------------------------------------------*/
+builder.Services.AddScoped<ICountryCreate, CountryCreate>();
+builder.Services.AddScoped<ICountryRead, CountryRead>();
+builder.Services.AddScoped<ICountryPatch, CountryPatch>();
+builder.Services.AddScoped<ICountryDelete, CountryDelete>();
 /*-----------------------------------------------------------------------*/
 builder.Services.AddScoped<ITokenHandlerService, TokenHandlerService>();
 /*-----------------------------------------------------------------------*/

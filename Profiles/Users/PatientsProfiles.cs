@@ -8,7 +8,8 @@ public class PatientsProfiles : Profile
 {
 	public PatientsProfiles()
 	{
-        CreateMap<PatientPOST, Patient>();
-        CreateMap<PatientPATCH, Patient>();
+        CreateMap<PatientGET, Patient>().ReverseMap();
+        CreateMap<PatientPOST, Patient>().ReverseMap();
+        CreateMap<PatientPATCH, Patient>().ReverseMap();
     }
 }

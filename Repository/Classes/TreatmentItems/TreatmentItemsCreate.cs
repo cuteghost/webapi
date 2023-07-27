@@ -1,8 +1,8 @@
 ﻿using Models.Domain;
-using Repository.Interfaces.TreatmentItems;
+using Repository.Classes.TreatmentItemsInterfaces;
 using server.Database;
 
-namespace Repository.Classes.TreatmentItems;
+namespace Repository.Classes.TreatmentItemsRepo;
 public class TreatmentItemsCreate : ITreatmentItemsCreate
 {
 

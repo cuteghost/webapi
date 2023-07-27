@@ -1,4 +1,4 @@
-﻿namespace Repository.Interfaces.TreatmentItems;
+﻿namespace Repository.Classes.TreatmentItemsInterfaces;
 using Models.Domain;
 public interface ITreatmentItemsCreate
 {

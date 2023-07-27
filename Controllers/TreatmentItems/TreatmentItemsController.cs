@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Repository.Interfaces.TreatmentInterfaces;
-using Repository.Interfaces.TreatmentItems;
+using Repository.Classes.TreatmentItemsInterfaces;
 using Services.ResponseService;
 
 namespace Controllers.TreatmentItemsControllers

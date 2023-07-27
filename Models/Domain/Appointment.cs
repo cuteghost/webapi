@@ -14,8 +14,8 @@ namespace Models.Domain
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string AppointmentStatus { get; set; } = string.Empty;
-        public long? PatinetId { get; set; }
-        public long? AcceptedBy { get; set; }    
 
+        public Staff? Staff { get; set; }
+        public Patient? Patient { get; set; }   
     }
 }

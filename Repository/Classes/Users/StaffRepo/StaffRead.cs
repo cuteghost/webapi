@@ -17,11 +17,11 @@ public class StaffRead : IStaffRead
         var id = await _dbContext.Staff.AsNoTracking().Where(s=>s.User.Id == userId).Select(s => s.StaffId).FirstOrDefaultAsync();
         return id;
     }
-    public async Task<StaffGet> GetStaffMember(long userId)
+    public async Task<StaffGet> GetStaffMember(long staffId)
     {
 
         var staffMember = await (from staff in _dbContext.Staff
-                        where staff.User.Id == userId
+                        where staff.StaffId == staffId
                         select new StaffGet
                         {
                             FirstName = staff.User.FirstName,

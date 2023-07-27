@@ -22,6 +22,37 @@ namespace webapi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Models.Domain.Appointment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AppointmentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long?>("PatientId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("StaffId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("StaffId");
+
+                    b.ToTable("Appointments");
+                });
+
             modelBuilder.Entity("Models.Domain.Blog", b =>
                 {
                     b.Property<long>("Id")
@@ -49,6 +80,45 @@ namespace webapi.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("Models.Domain.City", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("Models.Domain.Country", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("Models.Domain.Education", b =>
@@ -181,17 +251,34 @@ namespace webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("CityId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("Models.Domain.Material", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long>("StockAmount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Materials");
                 });
 
             modelBuilder.Entity("Models.Domain.Patient", b =>
@@ -280,6 +367,9 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<long>("AppointmentId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Diagnosis")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
@@ -288,22 +378,43 @@ namespace webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<long?>("PatientId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("StaffId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("TreatmentDate")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("StaffId");
+                    b.HasIndex("AppointmentId");
 
                     b.ToTable("Treatments");
+                });
+
+            modelBuilder.Entity("Models.Domain.TreatmentItems", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime");
+
+                    b.Property<long?>("MaterialId")
+                        .HasColumnType("bigint");
+
+                    b.Property<float>("RequiredAmount")
+                        .HasColumnType("real");
+
+                    b.Property<long?>("TreatmentId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("TreatmentId");
+
+                    b.ToTable("TreatmentItems");
                 });
 
             modelBuilder.Entity("Models.Domain.User", b =>
@@ -350,6 +461,21 @@ namespace webapi.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Models.Domain.Appointment", b =>
+                {
+                    b.HasOne("Models.Domain.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
+                    b.HasOne("Models.Domain.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Staff");
+                });
+
             modelBuilder.Entity("Models.Domain.Blog", b =>
                 {
                     b.HasOne("Models.Domain.User", "Creator")
@@ -359,6 +485,15 @@ namespace webapi.Migrations
                         .IsRequired();
 
                     b.Navigation("Creator");
+                });
+
+            modelBuilder.Entity("Models.Domain.City", b =>
+                {
+                    b.HasOne("Models.Domain.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Models.Domain.Education", b =>
@@ -406,6 +541,15 @@ namespace webapi.Migrations
                     b.Navigation("Staff");
                 });
 
+            modelBuilder.Entity("Models.Domain.Location", b =>
+                {
+                    b.HasOne("Models.Domain.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.Navigation("City");
+                });
+
             modelBuilder.Entity("Models.Domain.Patient", b =>
                 {
                     b.HasOne("Models.Domain.User", "User")
@@ -430,17 +574,28 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("Models.Domain.Treatment", b =>
                 {
-                    b.HasOne("Models.Domain.Patient", "Patient")
+                    b.HasOne("Models.Domain.Appointment", "Appointment")
                         .WithMany()
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Models.Domain.Staff", "Staff")
+                    b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("Models.Domain.TreatmentItems", b =>
+                {
+                    b.HasOne("Models.Domain.Material", "Material")
                         .WithMany()
-                        .HasForeignKey("StaffId");
+                        .HasForeignKey("MaterialId");
 
-                    b.Navigation("Patient");
+                    b.HasOne("Models.Domain.Treatment", "Treatment")
+                        .WithMany()
+                        .HasForeignKey("TreatmentId");
 
-                    b.Navigation("Staff");
+                    b.Navigation("Material");
+
+                    b.Navigation("Treatment");
                 });
 #pragma warning restore 612, 618
         }

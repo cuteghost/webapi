@@ -8,9 +8,9 @@ namespace server.Profiles
     {
         public StaffProfiles()
         {
-            CreateMap<StaffPost,Staff>();
-            CreateMap<StaffPatch,Staff>();
-            CreateMap<Staff,StaffGet>();
+            CreateMap<StaffPost,Staff>().ReverseMap();
+            CreateMap<StaffPatch,Staff>().ReverseMap();
+            CreateMap<Staff,StaffGet>().ReverseMap();
         }
     }
 }

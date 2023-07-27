@@ -11,13 +11,8 @@ namespace Controllers.TreatmentControllers
         public async Task<IActionResult> CreateAsync(TreatmentPOST treatmentPost)
         {
             var newTreatment = _mapper.Map<Treatment>(treatmentPost);
-            
-            var staffMemberDto = await _staffRead.GetStaffMember(treatmentPost.StaffId);
-            newTreatment.Staff = _mapper.Map<Staff>(staffMemberDto);
-           
-            var patientDto = await _patientRead.ReadPatientById(treatmentPost.StaffId);
-            newTreatment.Patient = _mapper.Map<Patient>(patientDto);
-            
+            var appointment = await _appointmentRead.GetAppointment(treatmentPost.AppointmentId);
+            newTreatment.Appointment = appointment;            
             await _treatmentCreate.CreateTreatment(newTreatment);
             return Ok("Done");
         }
