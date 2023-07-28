@@ -22,7 +22,5 @@ public class DentalDBContext : DbContext
     public DbSet<Country> Countries { get; set; }
     public DbSet<City> Cities { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
-    
-
 
 }

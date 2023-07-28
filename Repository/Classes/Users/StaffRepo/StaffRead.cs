@@ -38,7 +38,7 @@ public class StaffRead : IStaffRead
     }
     public async Task<Staff> GetStaffObjectMember(long staffId)
     {
-        return await _dbContext.Staff.Include(s => s.User).AsNoTracking().FirstOrDefaultAsync(s => s.StaffId == staffId);
+        return await _dbContext.Staff.Include(s => s.User).FirstOrDefaultAsync(s => s.StaffId == staffId);
     }
     public async Task<List<StaffGet>> GetStaffTeam()
     {

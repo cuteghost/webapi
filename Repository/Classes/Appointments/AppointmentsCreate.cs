@@ -15,7 +15,7 @@ namespace Repository.Classes.AppointmentsRepo
 
         public async Task<long> CreateAppointment(Appointment newAppointment)
         {
-            await dbContext.AddAsync(newAppointment);
+            await dbContext.Appointments.AddAsync(newAppointment);
             await dbContext.SaveChangesAsync();
 
             return newAppointment.Id;

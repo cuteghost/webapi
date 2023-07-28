@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
@@ -47,6 +48,25 @@ using Services.HashService;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+// Replace secrets from environment variables
+var dbServer = Environment.GetEnvironmentVariable("DB_SERVER") ?? configuration["ConnectionStrings:DBConnection"];
+var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? configuration["ConnectionStrings:DBConnection"];
+var dbUser = Environment.GetEnvironmentVariable("DB_USER") ?? configuration["ConnectionStrings:DBConnection"];
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? configuration["ConnectionStrings:DBConnection"];
+
+var connectionString = $"Server={dbServer};database={dbName};Trusted_Connection=False;TrustServerCertificate=True;User Id={dbUser};Password={dbPassword};";
+configuration["ConnectionStrings:DBConnection"] = connectionString;
+
+configuration["JWT:key"] = Environment.GetEnvironmentVariable("JWT_KEY") ?? configuration["JWT:key"];
+// configuration["ApiKeys:ApiKey2"] = Environment.GetEnvironmentVariable("API_KEY_2") ?? configuration["ApiKeys:ApiKey2"];
+
+Console.WriteLine("EVO GA");
+Console.WriteLine(configuration.GetConnectionString("JWT:key"));
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -58,7 +78,7 @@ builder.Services.AddSwaggerGen();
 /* DbConnection */
 builder.Services.AddDbContext<DentalDBContext>(options =>
 {
-    var mainConnectionString = builder.Configuration.GetConnectionString("DBConnection");
+    var mainConnectionString = configuration.GetConnectionString("DBConnection");
     if (mainConnectionString != null)
     {
         options.UseSqlServer(mainConnectionString);
@@ -161,7 +181,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:key"]))
     });
     
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
@@ -197,3 +217,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

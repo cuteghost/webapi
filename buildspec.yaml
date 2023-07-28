@@ -3,11 +3,15 @@ version: 0.2
 phases:
   pre_build:
     commands:
+      - DB_SERVER=$(aws secretsmanager get-secret-value --secret-id "prod/mssql-server" --query "SecretString" --output text | jq -r ".DB_SERVER")
+      - DB_NAME=$(aws secretsmanager get-secret-value --secret-id "prod/mssql-dbname" --query "SecretString" --output text | jq -r ".DB_NAME")
+      - DB_USER=$(aws secretsmanager get-secret-value --secret-id "prod/mssql-user" --query "SecretString" --output text | jq -r ".DB_USER")
+      - DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id "prod/mssql-password" --query "SecretString" --output text | jq -r ".DB_PASSWORD")
       - IMAGE_TAG="$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION} | shasum | head -c 8)"
       - aws ecr get-login-password|docker login -u AWS --password-stdin "$ECR_REPOSITORY_URI"
   build:
     commands:
-      - docker build -t ${ECR_REPOSITORY_URI}:latest -f Dockerfile .
+      - docker build --build-arg DB_SERVER_ARG=DB_SERVER --build-arg DB_NAME_ARG=DB_NAME --build-arg DB_USER_ARG=DB_USER  --build-arg DB_PASSWORD_ARG=DB_PASSWORD -t ${ECR_REPOSITORY_URI}:latest -f Dockerfile .
       - docker tag ${ECR_REPOSITORY_URI}:latest ${ECR_REPOSITORY_URI}:${IMAGE_TAG}
   post_build:
     commands:

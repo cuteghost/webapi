@@ -15,7 +15,7 @@ namespace Repository.Classes.AppointmentsRepo
         }
         public async Task<List<Appointment>> GetAllAppointments()
         {
-            var appointments = await dbContext.Appointments.AsNoTracking().ToListAsync();
+            var appointments = await dbContext.Appointments.Include(s => s.Patient).Include(s => s.Staff).AsNoTracking().ToListAsync();
             return appointments;
         }
 
