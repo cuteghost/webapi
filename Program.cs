@@ -65,7 +65,7 @@ configuration["JWT:key"] = Environment.GetEnvironmentVariable("JWT_KEY") ?? conf
 // configuration["ApiKeys:ApiKey2"] = Environment.GetEnvironmentVariable("API_KEY_2") ?? configuration["ApiKeys:ApiKey2"];
 
 Console.WriteLine("EVO GA");
-Console.WriteLine(configuration.GetConnectionString("JWT:key"));
+Console.WriteLine(configuration.GetConnectionString("DBConnection"));
 
 // Add services to the container.
 
