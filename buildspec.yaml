@@ -11,6 +11,10 @@ phases:
       - aws ecr get-login-password|docker login -u AWS --password-stdin "$ECR_REPOSITORY_URI"
   build:
     commands:
+      - echo ${DB_SERVER} 
+      - echo ${DB_NAME} 
+      - echo ${DB_USER} 
+      - echo ${DB_PASSWORD}
       - docker build --build-arg DB_SERVER_ARG=${DB_SERVER} --build-arg DB_NAME_ARG=${DB_NAME} --build-arg DB_USER_ARG=${DB_USER}  --build-arg DB_PASSWORD_ARG=${DB_PASSWORD} -t ${ECR_REPOSITORY_URI}:latest -f Dockerfile .
       - docker tag ${ECR_REPOSITORY_URI}:latest ${ECR_REPOSITORY_URI}:${IMAGE_TAG}
   post_build:
