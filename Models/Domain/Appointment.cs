@@ -15,13 +15,13 @@ namespace Models.Domain
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string AppointmentStatus { get; set; } = string.Empty;
-        public long StaffId { get; set; }
-        public long PatientId { get; set; }
+        public long? StaffId { get; set; }
+        public long? PatientId { get; set; }
         
         [ForeignKey("StaffId")]
-        public Staff? Staff { get; set; }
+        public virtual Staff? Staff { get; set; }
         
         [ForeignKey("PatientId")]
-        public Patient? Patient { get; set; }   
+        public virtual Patient? Patient { get; set; }   
     }
 }

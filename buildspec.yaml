@@ -7,15 +7,24 @@ phases:
       - DB_NAME=$(aws secretsmanager get-secret-value --secret-id "prod/mssql-dbname" --query "SecretString" --output text | jq -r ".DB_NAME")
       - DB_USER=$(aws secretsmanager get-secret-value --secret-id "prod/mssql-user" --query "SecretString" --output text | jq -r ".DB_USER")
       - DB_PASSWORD=$(aws secretsmanager get-secret-value --secret-id "prod/mssql-password" --query "SecretString" --output text | jq -r ".DB_PASSWORD")
+      
+      - JWT_KEY=$(aws secretsmanager get-secret-value --secret-id "prod/jwt-key" --query "SecretString" --output text | jq -r ".JWT_KEY")
+      - JWT_ISSUER=$(aws secretsmanager get-secret-value --secret-id "prod/jwt-issuer" --query "SecretString" --output text | jq -r ".JWT_ISSUER")
+      - JWT_AUDIENCE=$(aws secretsmanager get-secret-value --secret-id "prod/jwt-audience" --query "SecretString" --output text | jq -r ".JWT_AUDIENCE")
+      
       - IMAGE_TAG="$(echo ${CODEBUILD_RESOLVED_SOURCE_VERSION} | shasum | head -c 8)"
       - aws ecr get-login-password|docker login -u AWS --password-stdin "$ECR_REPOSITORY_URI"
   build:
     commands:
-      - echo ${DB_SERVER} 
-      - echo ${DB_NAME} 
-      - echo ${DB_USER} 
-      - echo ${DB_PASSWORD}
-      - docker build --build-arg DB_SERVER_ARG=${DB_SERVER} --build-arg DB_NAME_ARG=${DB_NAME} --build-arg DB_USER_ARG=${DB_USER}  --build-arg DB_PASSWORD_ARG=${DB_PASSWORD} -t ${ECR_REPOSITORY_URI}:latest -f Dockerfile .
+      - docker build \
+          --build-arg DB_SERVER_ARG=${DB_SERVER} \
+          --build-arg DB_NAME_ARG=${DB_NAME} \
+          --build-arg DB_USER_ARG=${DB_USER} \
+          --build-arg DB_PASSWORD_ARG=${DB_PASSWORD} \
+          --build-arg JWT_KEY_ARG=${JWT_KEY} \
+          --build-arg JWT_ISSUER_ARG=${JWT_ISSUER} \
+          --build-arg JWT_AUDIENCE_ARG=${JWT_AUDIENCE} \
+          -t ${ECR_REPOSITORY_URI}:latest -f Dockerfile .
       - docker tag ${ECR_REPOSITORY_URI}:latest ${ECR_REPOSITORY_URI}:${IMAGE_TAG}
   post_build:
     commands:

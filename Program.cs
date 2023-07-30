@@ -61,8 +61,10 @@ var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? configurat
 var connectionString = $"Server={dbServer};database={dbName};Trusted_Connection=False;TrustServerCertificate=True;User Id={dbUser};Password={dbPassword};";
 configuration["ConnectionStrings:DBConnection"] = connectionString;
 
-configuration["JWT:key"] = Environment.GetEnvironmentVariable("JWT_KEY") ?? configuration["JWT:key"];
-// configuration["ApiKeys:ApiKey2"] = Environment.GetEnvironmentVariable("API_KEY_2") ?? configuration["ApiKeys:ApiKey2"];
+// Load JWT settings from environment variables or appsettings.json
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? builder.Configuration["JWT:key"];
+var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? builder.Configuration["JWT:issuer"];
+var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? builder.Configuration["JWT:audience"];
 
 Console.WriteLine("EVO GA");
 Console.WriteLine(configuration.GetConnectionString("DBConnection"));
@@ -179,9 +181,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:key"]))
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
     });
     
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
