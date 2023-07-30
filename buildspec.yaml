@@ -16,15 +16,7 @@ phases:
       - aws ecr get-login-password|docker login -u AWS --password-stdin "$ECR_REPOSITORY_URI"
   build:
     commands:
-      - docker build \
-          --build-arg DB_SERVER_ARG=${DB_SERVER} \
-          --build-arg DB_NAME_ARG=${DB_NAME} \
-          --build-arg DB_USER_ARG=${DB_USER} \
-          --build-arg DB_PASSWORD_ARG=${DB_PASSWORD} \
-          --build-arg JWT_KEY_ARG=${JWT_KEY} \
-          --build-arg JWT_ISSUER_ARG=${JWT_ISSUER} \
-          --build-arg JWT_AUDIENCE_ARG=${JWT_AUDIENCE} \
-          -t ${ECR_REPOSITORY_URI}:latest -f Dockerfile .
+      - docker build --build-arg DB_SERVER_ARG=${DB_SERVER} --build-arg DB_NAME_ARG=${DB_NAME} --build-arg DB_USER_ARG=${DB_USER} --build-arg DB_PASSWORD_ARG=${DB_PASSWORD} --build-arg JWT_KEY_ARG=${JWT_KEY} --build-arg JWT_ISSUER_ARG=${JWT_ISSUER} --build-arg JWT_AUDIENCE_ARG=${JWT_AUDIENCE} -t ${ECR_REPOSITORY_URI}:latest -f Dockerfile .
       - docker tag ${ECR_REPOSITORY_URI}:latest ${ECR_REPOSITORY_URI}:${IMAGE_TAG}
   post_build:
     commands:
