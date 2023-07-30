@@ -67,7 +67,7 @@ var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? builder.Conf
 var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE") ?? builder.Configuration["JWT:audience"];
 
 Console.WriteLine("EVO GA");
-Console.WriteLine(configuration.GetConnectionString("DBConnection"));
+Console.WriteLine(jwtKey);
 
 // Add services to the container.
 
