@@ -48,9 +48,7 @@ using Services.HashService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .Build();
+var configuration = builder.Configuration;
 
 // Replace secrets from environment variables
 var dbServer = Environment.GetEnvironmentVariable("DB_SERVER") ?? configuration["ConnectionStrings:DBConnection"];
