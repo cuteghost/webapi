@@ -20,7 +20,10 @@ namespace Models.Domain
         [Column(TypeName = "datetime")]
         public DateTime TreatmentDate { get; set; } = DateTime.Now;
         [Required]
-        public Appointment Appointment { get; set; }
+        public long AppointmentId { get; set; }
+        
+        [ForeignKey("AppointmentId")]
+        public virtual Appointment Appointment { get; set; }
 
     }
 }

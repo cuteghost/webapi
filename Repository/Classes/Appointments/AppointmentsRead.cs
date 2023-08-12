@@ -21,7 +21,7 @@ namespace Repository.Classes.AppointmentsRepo
 
         public async Task<Appointment?> GetAppointment(long AppointmentId)
         {
-            return await dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(x => x.Id == AppointmentId);
+            return await dbContext.Appointments.FirstOrDefaultAsync(x => x.Id == AppointmentId);
         }
 
         public async Task<bool> AppointmentExists(long appointmentId)

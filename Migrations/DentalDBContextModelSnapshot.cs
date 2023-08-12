@@ -38,10 +38,10 @@ namespace webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<long>("PatientId")
+                    b.Property<long?>("PatientId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("StaffId")
+                    b.Property<long?>("StaffId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -465,15 +465,11 @@ namespace webapi.Migrations
                 {
                     b.HasOne("Models.Domain.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("PatientId");
 
                     b.HasOne("Models.Domain.Staff", "Staff")
                         .WithMany()
-                        .HasForeignKey("StaffId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("StaffId");
 
                     b.Navigation("Patient");
 

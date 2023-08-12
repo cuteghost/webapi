@@ -59,6 +59,8 @@ var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? configurat
 var connectionString = $"Server={dbServer};database={dbName};Trusted_Connection=False;TrustServerCertificate=True;User Id={dbUser};Password={dbPassword};";
 configuration["ConnectionStrings:DBConnection"] = connectionString;
 
+Console.WriteLine(configuration["ConnectionStrings:DBConnection"]);
+
 // Load JWT settings from environment variables or appsettings.json
 var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY") ?? configuration["JWT:key"];
 var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER") ?? configuration["JWT:issuer"];

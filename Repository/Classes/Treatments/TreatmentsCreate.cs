@@ -15,7 +15,7 @@ namespace Repository.Classes.TreatmentsRepo
 
         public async Task<long> CreateTreatment(Treatment newTreatment)
         {
-            await dbContext.AddAsync(newTreatment);
+            await dbContext.Treatments.AddAsync(newTreatment);
             await dbContext.SaveChangesAsync();
 
             return newTreatment.Id;
