@@ -49,6 +49,7 @@ public class StaffRead : IStaffRead
                             Email = staff.User.Email,
                             // Education = staff.Education,
                             Languages = staff.Languages,
+                            StaffId = staff.StaffId,
                          }
                          ).ToListAsync();
         return staffMembers;

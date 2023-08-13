@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Models.Domain;
 using Models.DTO.AuthDTO;
 using server.Database;
 using System.IdentityModel.Tokens.Jwt;
@@ -46,6 +47,25 @@ namespace Services.TokenHandlerService
             var jwtAuth = handler.ReadJwtToken(token);
             var tokenEmail = jwtAuth.Claims.First(c => c.Type == ClaimTypes.Email).Value;
             return tokenEmail;
+        }
+
+        public long GetPatientIdFromJWT(string token)
+        {
+            var email = GetEmailFromJWT(token);
+            var query = from patients in _dbContext.Patients
+                    join user in _dbContext.Users on patients.User.Email equals user.Email
+                    where email == user.Email
+                    select  patients.PatientId;
+             return query.FirstOrDefault();
+        }
+        public long GetStaffIdFromJWT(string token)
+        {
+            var email = GetEmailFromJWT(token);
+            var query = from staff in _dbContext.Staff
+                    join user in _dbContext.Users on staff.User.Email equals user.Email
+                    where email == user.Email
+                    select  staff.StaffId;
+             return query.FirstOrDefault();
         }
 
         public async Task<bool> IsStaff(string email)

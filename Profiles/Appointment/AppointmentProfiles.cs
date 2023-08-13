@@ -9,5 +9,6 @@ public class AppointmentProfile : AutoMapper.Profile
 		CreateMap<Appointment, AppointmentGET>().ReverseMap();
 		CreateMap<Appointment, AppointmentPOST>().ReverseMap();
 		CreateMap<Appointment, AppointmentPATCH>().ReverseMap();
+		CreateMap<Appointment, AppointmentChangeStatus>().ReverseMap();
     }
 }

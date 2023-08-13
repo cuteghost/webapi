@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Domain;
 using Models.DTO.AppointmentDTO;
@@ -7,9 +8,10 @@ namespace Controllers.AppointmentControllers
     public partial class AppointmentController : Controller
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromHeader] string Authorization)
         {
-            var appointments = await _appointmentsRead.GetAllAppointments();
+            var appointments = await _appointmentsRead.GetAllAppointments(Authorization);
             var appointmentsDto = _mapper.Map<List<AppointmentGET>>(appointments);
             return Ok(appointmentsDto);
         }

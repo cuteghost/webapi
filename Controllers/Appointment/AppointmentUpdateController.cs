@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models.Domain;
 using Models.DTO.AppointmentDTO;
@@ -21,6 +22,19 @@ namespace Controllers.AppointmentControllers
             if( updated != null)
             {
                 return Ok(_mapper.Map<AppointmentGET>(appointment));
+            }
+            return NotFound();
+        }
+
+        [HttpPatch]
+        // [Authorize]
+        [Route("change-status")]
+        public async Task<IActionResult> ChangeStatus([FromBody]AppointmentChangeStatus status)
+        {
+            var updatedStatus = await _appointmentsUpdate.UpdateStatus(status);
+            if(updatedStatus != false)
+            {
+                return Ok();
             }
             return NotFound();
         }

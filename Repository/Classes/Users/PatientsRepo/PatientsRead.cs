@@ -25,7 +25,8 @@ public class PatientsRead : IPatientsRead
                         Lastname = users.LastName,
                         BirthDate = users.BirthDate,
                         Telephone = patients.Telephone,
-                        Adress = patients.Adress
+                        Adress = patients.Adress,
+                        PatientId = patients.PatientId,
 
                     };
         List<PatientGET> patientsList = new();
@@ -34,6 +35,7 @@ public class PatientsRead : IPatientsRead
             PatientGET patients = new()
             {
                 Id = row.Id,
+                PatientId = row.PatientId,
                 Email = row.Email,
                 FirstName = row.FirstName,
                 LastName = row.Lastname,

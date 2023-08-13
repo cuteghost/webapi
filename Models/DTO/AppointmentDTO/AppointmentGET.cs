@@ -7,7 +7,7 @@ namespace Models.DTO.AppointmentDTO
         public long Id { get; set; }    
         public DateTime Date { get; set; }
         public string AppointmentStatus { get; set; } = string.Empty;
-        public Staff? Staff { get; set; }
-        public Patient? Patient { get; set; }   
+        public string StaffName { get; set; } = string.Empty;
+        public string PatientName { get; set; } = string.Empty;
     }
 }
