@@ -32,7 +32,9 @@ namespace Repository.Classes.AppointmentsRepo
                                     StaffName = staff.User.FirstName + " " + staff.User.LastName,
                                     PatientName = patient.User.FirstName + " " + patient.User.LastName,
                                     Appointments.Date,
-                                    Appointments.AppointmentStatus
+                                    Appointments.AppointmentStatus,
+                                    staffId = staff.StaffId,
+                                    patientId = patient.PatientId,
                                 };
             List<AppointmentGET> appointments = new();
             foreach (var row in query)
@@ -42,7 +44,9 @@ namespace Repository.Classes.AppointmentsRepo
                     StaffName = row.StaffName,
                     PatientName = row.PatientName,
                     Date = row.Date,
-                    AppointmentStatus = row.AppointmentStatus
+                    AppointmentStatus = row.AppointmentStatus,
+                    PatientId = row.patientId,
+                    StaffId = row.staffId,
                 };
                 appointments.Add(appointment);
             }
@@ -51,7 +55,7 @@ namespace Repository.Classes.AppointmentsRepo
 
         public async Task<Appointment?> GetAppointment(long AppointmentId)
         {
-            return await _dbContext.Appointments.FirstOrDefaultAsync(x => x.Id == AppointmentId);
+            return await _dbContext.Appointments.Include(p => p.Patient).Include(s => s.Staff).Include(u => u.Patient.User).Include(u => u.Staff.User).FirstOrDefaultAsync(x => x.Id == AppointmentId);
         }
 
         public async Task<bool> AppointmentExists(long appointmentId)

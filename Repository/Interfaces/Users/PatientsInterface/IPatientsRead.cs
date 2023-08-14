@@ -10,5 +10,6 @@ public interface IPatientsRead
     public Task<PatientGET> ReadPatientById(long patientId);
     public Task<Patient> ReadPatientObjectById(long patientId);
     public Task<Patient> ReadPatientByEmail(string email, string _="");
+    public Task<Patient> ReadPatient(long patientId);
 
 }

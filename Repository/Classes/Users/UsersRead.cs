@@ -1,6 +1,7 @@
 ﻿using Repository.Interfaces.Users;
 using Microsoft.EntityFrameworkCore;
 using server.Database;
+using Models.Domain;
 
 namespace Repository.Classes.Users;
 public class UsersRead : IUsersRead
@@ -29,6 +30,19 @@ public class UsersRead : IUsersRead
         {
             var userID = await _dbContext.Users.AsNoTracking().Where(s => s.Email == email).Select(s => s.Id).FirstOrDefaultAsync();
             return userID;
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+    }
+    public async Task<User> GetUserById(long id)
+    {
+        try
+        {
+            var user = await _dbContext.Users.AsNoTracking().Where(s => s.Id == id).FirstOrDefaultAsync();
+            return user;
         }
         catch (Exception)
         {

@@ -9,6 +9,6 @@ public interface IStaffRead
     public Task<StaffGet> GetStaffMember(long userId);
     public Task<Staff> GetStaffObjectMember(long staffId);
     public Task<List<StaffGet>> GetStaffTeam();
-
+    public Task<Staff> GetStaff (long staffId);
     public Task<StaffGet> GetStaffByEmail(string email);
 }

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Models.Domain;
 using Models.DTO.AppointmentDTO;
 using Repository.Interfaces.AppointmentInterfaces;
+using Repository.Interfaces.Users;
 using server.Database;
 
 namespace Repository.Classes.AppointmentsRepo
@@ -9,15 +10,14 @@ namespace Repository.Classes.AppointmentsRepo
     public class AppointmentsUpdate : IAppointmentsUpdate
     {
         private readonly DentalDBContext dbContext;
-
         public AppointmentsUpdate(DentalDBContext _dbContext)
         {
             dbContext = _dbContext;
         }
 
-        public async Task<long?> UpdateAppointment(Appointment appointment, long appointmentId)
+        public async Task<long?> UpdateAppointment(Appointment appointment)
         {
-            var exists = await dbContext.Appointments.FirstOrDefaultAsync(x => x.Id == appointmentId);
+            var exists = await dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(x => x.Id == appointment.Id);
             if(exists != null)
             {
                 dbContext.Update(appointment);

@@ -9,5 +9,7 @@ namespace Models.DTO.AppointmentDTO
         public string AppointmentStatus { get; set; } = string.Empty;
         public string StaffName { get; set; } = string.Empty;
         public string PatientName { get; set; } = string.Empty;
+        public long PatientId { get; set; }
+        public long StaffId { get; set; }
     }
 }

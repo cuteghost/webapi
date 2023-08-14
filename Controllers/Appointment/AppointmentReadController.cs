@@ -20,8 +20,13 @@ namespace Controllers.AppointmentControllers
         public async Task<IActionResult> GetById([FromRoute]long id)
         {
             var appointment = await _appointmentsRead.GetAppointment(id);
-            if(appointment != null) 
-                return Ok(_mapper.Map<AppointmentGET>(appointment));
+            if(appointment != null)
+            {
+                var appointmentGet = _mapper.Map<AppointmentGET>(appointment);
+                appointmentGet.PatientName = appointment.Patient.User.FirstName + " " + appointment.Patient.User.LastName;
+                appointmentGet.StaffName = appointment.Staff.User.FirstName + " " + appointment.Staff.User.LastName; 
+                return Ok(appointmentGet);
+            } 
             return NotFound();
         }
     }

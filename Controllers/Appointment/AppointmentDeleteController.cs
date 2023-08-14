@@ -6,7 +6,7 @@ namespace Controllers.AppointmentControllers
 {
     public partial class AppointmentController : Controller
     {
-        [HttpPost]
+        [HttpDelete]
         [Route("delete/{id:long}")]
         public async Task<IActionResult> DeleteAsync([FromRoute]long id)
         {

@@ -86,4 +86,10 @@ public class StaffRead : IStaffRead
 
         return staffMember;
     }
+
+    public async Task<Staff> GetStaff(long staffId)
+    {
+        return await _dbContext.Staff.Where(s => s.StaffId == staffId).Include(u => u.User).FirstOrDefaultAsync();
+    }
+
 }

@@ -88,7 +88,8 @@ public class PatientsRead : IPatientsRead
                           where patients.PatientId == patientId
                           select new
                           {
-                              Id = patients.User.Id,
+                              PatientId = patients.PatientId,
+                              UserId = patients.User.Id,
                               FirstName = users.FirstName,
                               Lastname = users.LastName,
                               BirthDate = users.BirthDate,
@@ -100,7 +101,8 @@ public class PatientsRead : IPatientsRead
                           }).FirstOrDefaultAsync();
         PatientGET patient = new()
         {
-            Id = query.Id,
+            PatientId = query.PatientId,
+            Id = query.UserId,
             FirstName = query.FirstName,
             LastName = query.Lastname,
             birthDate = query.BirthDate,
@@ -112,6 +114,10 @@ public class PatientsRead : IPatientsRead
         };
 
         return patient;
+    }
+    public async Task<Patient> ReadPatient(long patientId)
+    {
+        return await _dbContext.Patients.Where(p => p.PatientId == patientId).Include(u => u.User).FirstOrDefaultAsync();
     }
     public async Task<Patient> ReadPatientObjectById(long patientId)
     {
