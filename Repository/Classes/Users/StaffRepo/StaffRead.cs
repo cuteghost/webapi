@@ -63,6 +63,7 @@ public class StaffRead : IStaffRead
                            select new
                            {
                                Id = staff.User.Id,
+                               StaffId = staff.StaffId,
                                FirstName = users.FirstName,
                                Lastname = users.LastName,
                                BirthDate = users.BirthDate,
@@ -74,6 +75,7 @@ public class StaffRead : IStaffRead
         StaffGet staffMember = new()
         {
             Id = query.Id,
+            StaffId = query.StaffId,
             FirstName = query.FirstName,
             LastName = query.Lastname,
             birthDate = query.BirthDate,

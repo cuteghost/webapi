@@ -24,7 +24,10 @@ public class Education
     [Required]
     [Column(TypeName = "datetime")]
     public DateTime To { get; set; } = DateTime.Now;
-    public Location? Location { get; set; }
-    
-    public Staff? Staff { get; set; }
+    public long? LocationId { get; set; }
+    public long? StaffId { get; set; }
+    [ForeignKey("LocationId")]
+    public virtual Location? Location { get; set; }
+    [ForeignKey("StaffId")]
+    public virtual Staff? Staff { get; set; }
 }

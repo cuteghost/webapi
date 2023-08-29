@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Repository.Interfaces.Users.StaffInterfaces;
 using Repository.Interfaces.Users.PatientsInterface;
 
-namespace Controllers.Users.InvoiceControllers;
+namespace Controllers.InvoiceControllers;
 [ApiController]
-[Authorize]
+// [Authorize]
 [Route("/api/[controller]")]
 
 public partial class InvoiceController : Controller

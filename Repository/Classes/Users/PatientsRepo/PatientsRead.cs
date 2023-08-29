@@ -17,6 +17,7 @@ public class PatientsRead : IPatientsRead
     {
         var query = from patients in _dbContext.Patients
                     join users in _dbContext.Users on patients.User equals users
+                    where patients.User.isActive != false
                     select new
                     {
                         Id = patients.User.Id,

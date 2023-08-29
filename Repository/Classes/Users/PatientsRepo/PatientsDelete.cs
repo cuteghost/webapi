@@ -12,21 +12,13 @@ public class PatientsDelete : IPatientsDelete
         _dbContext = dbContext;
     }
 
-    public async Task<long> DeletePatientAsync(long adminId, long userId)
+    public async Task<long> DeletePatientAsync(long userId)
     {
-        var patient = await _dbContext.Patients.FirstOrDefaultAsync(patient => patient.PatientId == userId);
+        var patient = await _dbContext.Patients.Include(p => p.User).FirstOrDefaultAsync(patient => patient.User.Id == userId);
         if (patient != null)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == patient.User.Id);
-            if (user != null)
-            {
-                _dbContext.Remove(user);
-                _dbContext.Remove(patient);
-            }
-            else
-            {
-                return 0;
-            }
+            patient.User.isActive = false;
+            _dbContext.Update(patient);
             await _dbContext.SaveChangesAsync();
         }
         else

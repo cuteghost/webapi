@@ -14,6 +14,7 @@ public partial class CityController : Controller
     public async Task<IActionResult> GetAllCities()
     {
         var cities = await _cityRead.GetAllCities();
-        return await _responseService.Response(200, cities);
+        var mappedCities = _mapper.Map<List<CityGET>>(cities);
+        return Ok(mappedCities);
     }
 }

@@ -14,6 +14,11 @@ public partial class LocationController : Controller
     public async Task<IActionResult> GetAllLocations()
     {
         var locations = await _locationRead.GetAllLocations();
-        return await _responseService.Response(200, locations);
+        var mappedLocations = _mapper.Map<List<LocationGet>>(locations);
+        foreach (var l in mappedLocations)
+        {
+            l.CountryName = locations.FirstOrDefault(s => s.Id == l.Id).City.Country.Name;
+        }
+        return await _responseService.Response(200, mappedLocations);
     }
 }

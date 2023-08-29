@@ -16,7 +16,7 @@ public class LocationRead : ILocationRead
 
     public async Task<List<Location>> GetAllLocations()
     {
-        var locations = await _dbContext.Locations.AsNoTracking().ToListAsync();
+        var locations = await _dbContext.Locations.Include(s => s.City).Include(s => s.City.Country).AsNoTracking().ToListAsync();
         return  locations;
     }
 

@@ -1,6 +1,8 @@
 ﻿using Models.Domain;
 using Repository.Interfaces.Users.StaffInterfaces;
 using server.Database;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Repository.Classes.Users.StaffRepo;
 public class StaffUpdate : IStaffUpdate
@@ -12,10 +14,14 @@ public class StaffUpdate : IStaffUpdate
 		_dbContext = dbContext;
 	}
 
-	public async Task<long> UpdateStaffAsync(User user, Models.Domain.Staff staff)
+	public async Task<long> UpdateStaffAsync(User user, Staff staff)
 	{
 		try
 		{
+			var userFromDb = await _dbContext.Users.AsNoTracking().FirstOrDefaultAsync(s => s.Email == staff.User.Email);
+			var password = userFromDb.Password;
+			staff.User.Password = password;
+
             _dbContext.Update(staff);
             await _dbContext.SaveChangesAsync();
 

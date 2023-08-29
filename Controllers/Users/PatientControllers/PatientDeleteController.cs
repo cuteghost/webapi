@@ -6,14 +6,18 @@ namespace Controllers.Users.PatientControllers;
 public partial class PatientController : Controller
 {
     [HttpDelete]
-    [Route("delete/{AdminId}/{UserId}")]
-    public async Task<IActionResult> DeletePatientAsync(long adminId, long userId)
+    [Route("delete/{UserId}")]
+    public async Task<IActionResult> DeletePatientAsync([FromHeader]string Authorization, long userId)
     {
-        var validationResult = await _patientValidations.ValidateDELETERequest(adminId,userId);
-        if (validationResult.ResultOfValidations == true)
+        var staffEmail = _iTokenService.GetEmailFromJWT(Authorization);
+        if (await _iTokenService.IsStaff(staffEmail))
         {
-            await _patientDeleteRepository.DeletePatientAsync(adminId, userId);
+            
+            return await _patientDeleteRepository.DeletePatientAsync(userId) != 0 ? Ok("Done"): NotFound("Patient doesn't exists");
         }
-         return await _responseService.Response(validationResult.StatusCode,validationResult.ValidationMessage);
+        else
+        {
+            return Unauthorized("Your not a staff");
+        }
     }
 }

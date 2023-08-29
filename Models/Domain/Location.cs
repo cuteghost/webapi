@@ -10,5 +10,7 @@ public class Location
     public long Id { get; set; }
     [Required]
     public string Address { get; set; } = string.Empty;
-    public City? City { get; set; }
+    public long? CityId { get; set; }
+    [ForeignKey("CityId")]
+    public virtual City? City { get; set; }
 }

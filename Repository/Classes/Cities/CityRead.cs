@@ -16,8 +16,8 @@ public class CityRead : ICityRead
 
     public async Task<List<City>> GetAllCities()
     {
-        var locations = await _dbContext.Cities.AsNoTracking().ToListAsync();
-        return  locations;
+        var cities = await _dbContext.Cities.Include(s => s.Country).AsNoTracking().ToListAsync();
+        return  cities;
     }
 
     public Task<City> GetCity()

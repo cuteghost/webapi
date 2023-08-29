@@ -16,18 +16,16 @@ public class InvoicesRead : IInvoicesRead
 
     public async Task<List<Invoice>> GetAllInvoices()
     {
-        var invoiceTitles = await _dbContext.Invoices.AsNoTracking().ToListAsync();
+        var invoiceTitles = await _dbContext.Invoices.Include(p => p.Patient).Include(p => p.Patient.User)
+                                                     .Include(s => s.Staff).Include(s => s.Staff.User)
+                                                     .AsNoTracking().ToListAsync();
         return invoiceTitles;
     }
-    public async Task<Invoice> GetInvoiceDetails(long invoiceId)
+    public async Task<Invoice> GetInvoice(long invoiceId)
     {
-        var invoiceTitle = await _dbContext.Invoices.AsNoTracking().FirstAsync(i => i.Id == invoiceId);
+        var invoiceTitle = await _dbContext.Invoices.Include(p => p.Patient).Include(p => p.Patient.User)
+                                                     .Include(s => s.Staff).Include(s => s.Staff.User)
+                                                     .AsNoTracking().FirstAsync(i => i.Id == invoiceId);
         return invoiceTitle;
     }
-    public async Task<long> InvoiceExists(long invoiceId)
-    {
-        var id = await _dbContext.Invoices.AsNoTracking().Where(i => i.Id == invoiceId).Select(i => i.Id).FirstAsync();
-        return id;
-    }
-
 }

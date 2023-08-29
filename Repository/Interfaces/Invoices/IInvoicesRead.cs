@@ -6,7 +6,6 @@ public interface IInvoicesRead
 {
     public Task<List<Invoice>> GetAllInvoices();
 
-    public Task<Invoice> GetInvoiceDetails(long invoiceId);
+    public Task<Invoice> GetInvoice(long invoiceId);
 
-    public Task<long> InvoiceExists(long invoiceId);
 }

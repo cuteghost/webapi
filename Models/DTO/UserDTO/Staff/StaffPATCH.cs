@@ -6,11 +6,5 @@ namespace Models.DTO.UserDTO.Staff
     {
         public long StaffId { get; set; }
         public DateTime Joined { get; set; } = DateTime.Today;
-        [MaxLength(4000)]
-        [MinLength(3)]
-        public string Certification { get; set; } = string.Empty;
-        [MaxLength(4000)]
-        [MinLength(3)]
-        public string Languages { get; set; } = string.Empty;
     }
 }

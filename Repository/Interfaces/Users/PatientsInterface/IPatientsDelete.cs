@@ -2,5 +2,5 @@
 
 public interface IPatientsDelete
 {
-    public Task<long> DeletePatientAsync(long adminId, long userId);
+    public Task<long> DeletePatientAsync(long userId);
 }

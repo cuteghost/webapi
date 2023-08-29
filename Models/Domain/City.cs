@@ -10,6 +10,8 @@ public class City
     public long Id { get; set; }
     [Required]
     public string Name { get; set; } = string.Empty;
-    public Country? Country { get; set; }
+    public long? CountryId { get; set; }
+    [ForeignKey("CountryId")]
+    public virtual Country? Country { get; set; }
 
 }

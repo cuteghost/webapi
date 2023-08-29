@@ -19,11 +19,18 @@ namespace Models.Domain
         
         [Column(TypeName = "datetime")]
         public DateTime TreatmentDate { get; set; } = DateTime.Now;
+        [Column(TypeName = "decimal")]
+        public float price { get; set; }
         [Required]
         public long AppointmentId { get; set; }
+        public long? InvoiceId { get; set; }
+        
+        [ForeignKey("InvoiceId")]
+        public virtual Invoice? Invoice { get; set; }
         
         [ForeignKey("AppointmentId")]
         public virtual Appointment Appointment { get; set; }
+
 
     }
 }

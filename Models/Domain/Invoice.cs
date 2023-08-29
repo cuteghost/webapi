@@ -8,23 +8,22 @@ public class Invoice
     public long Id {get;set;}
     [Required]
     [Column(TypeName ="datetime")]
-    public DateTime InvoiceDate {get;set;} = DateTime.Now;
+    public DateTime CreatedDate {get;set;} = DateTime.Now.Date;
+    [Required]
+    [Column(TypeName ="datetime")]
+    public DateTime DueDate {get;set;} = DateTime.Now;
     [Required]
     [Column(TypeName ="decimal(18,2)")]
     public float Amount {get;set;}
-    [Required]
-    [Column(TypeName ="nvarchar")]
-    [MaxLength(10)]
-    [MinLength(1)]
-    public string Currency{get;set;} = string.Empty;
-    [Column(TypeName ="smallint")]
-    public int IsPaid { get;set; } = 0;
-    [Required]
-    [Column(TypeName ="decimal(18,2)")]
-    public float AmountRefused {get;set;}   
+    [Column(TypeName ="nvarchar(max)")]
+    public string Status { get;set; }
+    public long? StaffId { get; set; } 
+    public long? PatientId { get; set; }
 
-    public Staff? Staff { get; set; }
-    public Patient? Patient { get; set; }
+    [ForeignKey("StaffId")]
+    public virtual Staff? Staff { get; set; }
+    [ForeignKey("PatientId")]
+    public virtual Patient? Patient { get; set; }
 
 
 }

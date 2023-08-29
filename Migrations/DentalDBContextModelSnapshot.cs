@@ -210,25 +210,21 @@ namespace webapi.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("AmountRefused")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar");
-
-                    b.Property<DateTime>("InvoiceDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<short>("IsPaid")
-                        .HasColumnType("smallint");
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime");
 
                     b.Property<long?>("PatientId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("StaffId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -378,12 +374,20 @@ namespace webapi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<long?>("InvoiceId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("TreatmentDate")
                         .HasColumnType("datetime");
+
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppointmentId");
+
+                    b.HasIndex("InvoiceId");
 
                     b.ToTable("Treatments");
                 });
@@ -455,6 +459,9 @@ namespace webapi.Migrations
                         .IsRequired()
                         .HasMaxLength(512)
                         .HasColumnType("nvarchar");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -580,7 +587,13 @@ namespace webapi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Models.Domain.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId");
+
                     b.Navigation("Appointment");
+
+                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("Models.Domain.TreatmentItems", b =>

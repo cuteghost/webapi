@@ -2,7 +2,7 @@
 using Models.Domain;
 public class CountryGET
 {
-    public long CountryId { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
 
 }

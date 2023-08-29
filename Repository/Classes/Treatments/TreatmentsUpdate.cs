@@ -25,5 +25,20 @@ namespace Repository.Classes.TreatmentsRepo
             }
             return null;
         }
+
+        public async Task<long> UpdateTreatmentInvoice(long treatmentId, long invoiceId)
+        {
+            var exists = await dbContext.Treatments.FindAsync(treatmentId);
+            if (exists != null)
+            {
+                exists.InvoiceId = invoiceId;
+                await dbContext.SaveChangesAsync();
+                return treatmentId;
+            }
+            else
+            {
+                return -1;
+            }
+        }
     }
 }

@@ -20,5 +20,20 @@ namespace Controllers.TreatmentControllers
             }
             return NotFound();
         }
+        [HttpPatch]
+        [Route("invoice/{id:long}")]
+        public async Task<IActionResult> UpdateTreatmentInvoice(long id, TreatmentInvoicePATCH invoiceData)
+        {
+            var updated = await _treatmentsUpdate.UpdateTreatmentInvoice(id, invoiceData.InvoiceId);
+            if( updated != -1)
+            {
+                return Ok(id);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
+
 }

@@ -2,8 +2,8 @@
 using Models.Domain;
 public class CityGET
 {
-    public long CityId { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
-    public string Country { get; set; } = string.Empty;
+    public string CountryName { get; set; } = string.Empty;
 
 }

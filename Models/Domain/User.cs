@@ -36,6 +36,7 @@ public class User
     [Column(TypeName = "nvarchar")]
     [MaxLength(512)]
     public string Password { get; set; } = string.Empty;
+    public bool isActive { get; set; } = true;
 }
 public enum Gender
 {
